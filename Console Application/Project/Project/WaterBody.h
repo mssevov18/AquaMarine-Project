@@ -4,6 +4,8 @@
 #include <string>
 #include <ctime>
 
+#include "framework.h"
+
 struct Coordinates
 {
 	//TODO Reasearch on ways to properly display (ie: degrees, minutes, seconds)
@@ -11,10 +13,12 @@ struct Coordinates
 	Coordinates(float newLon, float newLat, float newAlt);
 
 	float longitude;
-	float latidute;
+	float latitude;
 	float altitude;
 
 	void print();
+	std::string toHtmlTableRow();
+	std::string toHtmlTableData();
 	void operator()(float newLon, float newLat, float newAlt);
 };
 
@@ -35,6 +39,8 @@ public:
 		std::string contributorName
 	);
 
+	static WaterBody getRandomWaterBody();
+
 private:
 	std::string name; // Name
 
@@ -54,8 +60,10 @@ private:
 
 	std::string contributorName; // Contributor Name
 	tm          logTimeStamp;    // Date and time of the last edit
+	//TODO implement the timestamp
 
 public:
+	std::string toHtmlTableRow();
 	void print();
 
 	void operator() (

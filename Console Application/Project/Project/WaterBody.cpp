@@ -3,26 +3,42 @@
 Coordinates::Coordinates()
 {
 	longitude = 0;
-	latidute  = 0;
+	latitude  = 0;
 	altitude  = 0;
 }
 
 Coordinates::Coordinates(float newLon, float newLat, float newAlt)
 {
 	longitude = newLon;
-	latidute  = newLat;
+	latitude  = newLat;
 	altitude  = newAlt;
 }
 
 void Coordinates::print()
 {
-	std::cout << "lon: " << longitude << " | lat: " << latidute << " | alt: " << altitude << 'm';
+	std::cout << "lon: " << longitude << "\370 | lat: " << latitude << "\370 | alt: " << altitude << 'm';
+}
+
+std::string Coordinates::toHtmlTableRow()
+{
+	return Paragraph("", "",
+		Paragraph("", "", std::to_string(longitude)).toString("td") + "\n" +
+		Paragraph("", "", std::to_string(latitude)).toString("td") + "\n" +
+		Paragraph("", "", std::to_string(altitude)).toString("td") + "\n"
+	).toString("tr");
+}
+
+std::string Coordinates::toHtmlTableData()
+{
+	return (Paragraph("", "", std::to_string(longitude)).toString("td") + "\n" +
+			Paragraph("", "", std::to_string(latitude)).toString("td") + "\n" +
+			Paragraph("", "", std::to_string(altitude)).toString("td") + "\n");
 }
 
 void Coordinates::operator()(float newLon, float newLat, float newAlt)
 {
 	longitude = newLon;
-	latidute  = newLat;
+	latitude  = newLat;
 	altitude  = newAlt;
 }
 
@@ -70,13 +86,56 @@ WaterBody::WaterBody(std::string name, Coordinates position, float maxLength, fl
 	this->contributorName = contributorName;
 }
 
+//Testing purposes only
+float rngF(int limit = 100, float multiplier = 1)
+{
+	return float(float(rand() % limit) * multiplier);
+}
+
+WaterBody WaterBody::getRandomWaterBody()
+{
+	return WaterBody(
+		"Test" + std::to_string(rand() % 100),
+		Coordinates(
+			float(rngF(100, 1.5)),
+			float(rngF(100, 6.3)),
+			float(rngF(100, 0.3))),
+		rngF(100, 0.2),
+		rngF(100, 0.5),
+		rngF(100, 4.2),
+		rngF(20, 0.99) + 20,
+		rngF(1),
+		rngF(15, 0.3),
+		rngF(100, 1.5),
+		"Contributor" + std::to_string(rand() % 100));
+}
+
+std::string WaterBody::toHtmlTableRow()
+{
+	return Paragraph("", "",
+	Paragraph("", "", name).toString("td")                        + "\n" +
+	position.toHtmlTableData() +
+	Paragraph("","",std::to_string(maxLength)).toString("td")     + "\n" +
+	Paragraph("","",std::to_string(maxWidth)).toString("td")      + "\n" +
+	Paragraph("","",std::to_string(maxDepth)).toString("td")      + "\n" +
+	Paragraph("","",std::to_string(perimeter)).toString("td")     + "\n" +
+	Paragraph("","",std::to_string(area)).toString("td")          + "\n" +
+	Paragraph("","",std::to_string(volume)).toString("td")        + "\n" +
+	Paragraph("","",std::to_string(temperature)).toString("td")   + "\n" +
+	Paragraph("","",std::to_string(isFreshWater)).toString("td")  + "\n" +
+	Paragraph("","",std::to_string(phLevel)).toString("td")       + "\n" +
+	Paragraph("","",std::to_string(polutionLevel)).toString("td") + "\n" +
+	Paragraph("","",contributorName).toString("td")               + "\n"
+	).toString("tr");
+}
+
 void WaterBody::print()
 {
 	std::cout << name << ": \n\t";
 	position.print();
 	std::cout << "\n\tMax Length: " << maxLength << "m | Max Width: " << maxWidth << "m | Max Depth: " << maxDepth;
-	std::cout << "\n\tPerimeter: " << perimeter << "m | Area: " << area << "m^2 | Volume: " << volume << "m^3";
-	std::cout << "\n\tTemperature: " << temperature << "oC | " << (isFreshWater ? "Fresh Water Body" : "Salt Water Body") << " | ph: " << phLevel << " | Polution Level:" << polutionLevel << '\n';
+	std::cout << "\n\tPerimeter: " << perimeter << "m | Area: " << area << "m\262 | Volume: " << volume << "m\263";
+	std::cout << "\n\tTemperature: " << temperature << "\370C | " << (isFreshWater ? "Fresh Water Body" : "Salt Water Body") << " | ph: " << phLevel << " | Polution Level:" << polutionLevel << '\n';
 }
 
 void WaterBody::operator() (std::string name, Coordinates position, float maxLength, float maxWidth, float maxDepth, float temperature, bool isFreshWater, float phLevel, float polutionLevel, std::string contributorName)
