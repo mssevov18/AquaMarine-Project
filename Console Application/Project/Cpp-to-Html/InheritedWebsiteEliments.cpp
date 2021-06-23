@@ -61,9 +61,17 @@ std::string Paragraph::getContent()
 	return _content;
 }
 
-std::string Paragraph::toString(const std::string& customTag)
+std::string Paragraph::toString(const std::string& customTag, bool newLine)
 {
-	return ("<" + (customTag.empty() ? _tag : customTag) + " class=\"" + _class + "\" style=\"" + _style + "\"> " + _content + " </" + _tag + ">");
+	return (
+		"<" + (customTag.empty() ? _tag : customTag) + 
+		(_class.empty() ? "" : " class=\"" + _class + "\"") +
+		(_style.empty() ? "" : " style=\"" + _style + "\"") + 
+		">" + 
+		(newLine ? "\n" : " ") + 
+		_content + 
+		(newLine ? "\n" : " ") +
+		"</" + (customTag.empty() ? _tag : customTag) + ">");
 }
 
 
@@ -98,9 +106,18 @@ std::string Link::getHref()
 }
 
 
-std::string Link::toString(const std::string& customTag)
+std::string Link::toString(const std::string& customTag, bool newLine)
 {
-	return ("<" + (customTag.empty() ? _tag : customTag) + " href=\"" + _href + "\" class=\"" + _class + "\" style=\"" + _style + "\"> " + _content + "</" + _tag + ">");
+	return (
+		"<" + (customTag.empty() ? _tag : customTag) +
+		(_href.empty() ? "" : " href=\"" + _href + "\"") +
+		(_class.empty() ? "" : " class=\"" + _class + "\"") +
+		(_style.empty() ? "" : " style=\"" + _style + "\"") +
+		">" +
+		(newLine ? "\n" : " ") +
+		_content +
+		(newLine ? "\n" : " ") +
+		"</" + (customTag.empty() ? _tag : customTag) + ">");
 }
 
 Image::Image()
@@ -143,7 +160,17 @@ std::string Image::getAlt()
 	return _alt;
 }
 
-std::string Image::toString(const std::string& customTag)
+std::string Image::toString(const std::string& customTag, bool newLine)
 {
-	return ("<" + (customTag.empty() ? _tag : customTag) + " src=\"" + _src + "\" alt=\"" + _alt + " class=\"" + _class + "\" style=\"" + _style + "\">");
+	return (
+		"<" + (customTag.empty() ? _tag : customTag) +
+		(_src.empty() ? "" : " src=\"" + _src + "\"") +
+		(_alt.empty() ? "" : " alt=\"" + _alt + "\"") +
+		(_class.empty() ? "" : " class=\"" + _class + "\"") +
+		(_style.empty() ? "" : " style=\"" + _style + "\"") +
+		">" +
+		(newLine ? "\n" : " ") +
+		_content +
+		(newLine ? "\n" : " ") +
+		"</" + (customTag.empty() ? _tag : customTag) + ">");
 }

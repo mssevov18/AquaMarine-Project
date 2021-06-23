@@ -26,7 +26,7 @@ public:
 	std::string getContent();
 
 
-	virtual std::string toString(const std::string& customTag = "");
+	virtual std::string toString(const std::string& customTag = "", bool newLine = false);
 };
 
 class Link : public Paragraph
@@ -43,7 +43,7 @@ public:
 	std::string getHref();
 
 
-	virtual std::string toString(const std::string& customTag = "");
+	virtual std::string toString(const std::string& customTag = "", bool newLine = false);
 };
 
 class Image : protected Link
@@ -64,5 +64,5 @@ public:
 	std::string getAlt();
 
 
-	virtual std::string toString(const std::string& customTag = "");
+	virtual std::string toString(const std::string& customTag = "", bool newLine = false);
 };

@@ -1,1 +1,11 @@
-BODY		{			background-color: black;			color: white;		}				table, th, td {		border: 1px solid white;		border - collapse: collapse;		}		
+body
+		{
+			background-color: white;
+			color: black;
+		}
+		
+		table, th, td {
+			border: 1px solid black;
+			margin: 5px
+		}
+		
