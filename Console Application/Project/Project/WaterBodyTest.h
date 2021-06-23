@@ -8,9 +8,9 @@
 
 using namespace std;
 
-string createTable(vector<WaterBody>& vec)
+string createTable(vector<WaterBody>& vec, const std::string& __class = "", const std::string& __style = "")
 {
-	Paragraph out("", "",
+	Paragraph out(__class, __style,
 			Paragraph("","",
 			Paragraph("", "", "Name").toString("th") + "\n" +
 			Paragraph("", "", "Longitude (&deg)").toString("th") + "\n" +
@@ -23,14 +23,14 @@ string createTable(vector<WaterBody>& vec)
 			Paragraph("", "", "Area (m&sup2)").toString("th") + "\n" +
 			Paragraph("", "", "Volume (m&sup3)").toString("th") + "\n" +
 			Paragraph("", "", "Temperature (&deg)").toString("th") + "\n" +
-			Paragraph("", "", "IsFreshWater").toString("th") + "\n" +
+			Paragraph("", "", "Water").toString("th") + "\n" +
 			Paragraph("", "", "Ph Level").toString("th") + "\n" +
 			Paragraph("", "", "PolutionLevel (%)").toString("th") + "\n" +
 			Paragraph("", "", "Contributor's Name").toString("th") + "\n"
-		).toString("tr") + "\n");
+		).toString("tr", true) + "\n");
 	for (size_t i = 0; i < vec.size(); i++)
 		out.addContent(vec[i].toHtmlTableRow() + "\n");
-	return out.toString("table");
+	return out.toString("table", true);
 }
 
 void waterBodyTest()
@@ -73,21 +73,21 @@ void waterBodyTest()
 	CSS sheet("../../../Website/Style", "results");
 
 	sheet.addContent(
-		"BODY\
-		{\
-			background-color: black;\
-			color: white;\
-		}\
-		\
-		table, th, td {\
-		border: 1px solid white;\
-		border - collapse: collapse;\
-		}\
+		"body\n\
+		{\n\
+			background-color: white;\n\
+			color: black;\n\
+		}\n\
+		\n\
+		table, th, td {\n\
+			border: 1px solid black;\n\
+			margin: 5px\n\
+		}\n\
 		"
 		);
 
 	page.addStyleSheet(sheet.getNamePath());
-	page.addElement(createTable(vec));
+	page.addElement(Paragraph("", "", createTable(vec)).toString("center", true));
 
 	sheet.makeFile();
 	page.makeFile(60000);

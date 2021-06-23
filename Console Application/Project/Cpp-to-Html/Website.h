@@ -13,6 +13,7 @@ class HTML
 public:
 	HTML();
 	HTML(const std::string& path, const std::string& filename, const std::string& pagename);
+	~HTML();
 
 private:
 	std::string path;
@@ -26,8 +27,10 @@ public:
 	void removeElement(void);
 	void removeElement(const size_t& index);
 	void eraseElements();
+
 	void addStyleSheet(const std::string& styleSheet, const std::string& styleSheetPath);
 	void addStyleSheet(const std::string& styleSheetNamePath);
+
 	std::string getFilePath();
 
 	void makeFile(int refreshRate = 1000);

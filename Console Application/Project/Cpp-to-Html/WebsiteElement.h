@@ -27,5 +27,5 @@ public:
 
 
 
-	virtual std::string toString(const std::string& customTag = "");
+	virtual std::string toString(const std::string& customTag = "", bool newLine = false);
 };
