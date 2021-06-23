@@ -41,9 +41,14 @@ void HTML::eraseElements()
 	elements.clear();
 }
 
-void HTML::addStyleSheet(const std::string& styleSheet)
+void HTML::addStyleSheet(const std::string& styleSheet, const std::string& styleSheetPath)
 {
-	styleSheets.push_back(styleSheet);
+	styleSheets.push_back(std::string(styleSheetPath + "/" + styleSheet));
+}
+
+void HTML::addStyleSheet(const std::string& styleSheetPath)
+{
+	styleSheets.push_back(styleSheetPath);
 }
 
 std::string HTML::getFilePath()
@@ -65,7 +70,7 @@ void HTML::makeFile(int refreshRate)
 			<< "<TITLE>" + pagename + "</TITLE>\n";
 
 		for (size_t i = 0; i < styleSheets.size(); i++)
-			file << "<LINK rel = \"stylesheet\" type = \"text/css\" href = \"" << path + "/" + styleSheets[i] + ".css" << "\">\n";
+			file << "<LINK rel = \"stylesheet\" type = \"text/css\" href = \"" << styleSheets[i] + ".css" << "\">\n";
 
 		file
 			<< "<SCRIPT type = \"text/JavaScript\">\n"
@@ -114,6 +119,16 @@ void CSS::replaceContent(const std::string& newContent)
 std::string CSS::getName()
 {
 	return filename;
+}
+
+std::string CSS::getPath()
+{
+	return path;
+}
+
+std::string CSS::getNamePath()
+{
+	return std::string(path + "/" + filename);
 }
 
 void CSS::makeFile()

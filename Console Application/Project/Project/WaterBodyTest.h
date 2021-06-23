@@ -60,10 +60,35 @@ void waterBodyTest()
 	vec.push_back(WaterBody::getRandomWaterBody());
 	vec[0].print();
 	cout << "\370";
+	vec.push_back(WaterBody::getRandomWaterBody());
+	vec.push_back(WaterBody::getRandomWaterBody());
+	vec.push_back(WaterBody::getRandomWaterBody());
+	vec.push_back(WaterBody::getRandomWaterBody());
+	vec.push_back(WaterBody::getRandomWaterBody());
+	vec.push_back(WaterBody::getRandomWaterBody());
+	vec.push_back(WaterBody::getRandomWaterBody());
+	vec.push_back(WaterBody::getRandomWaterBody());
 
-	HTML page;
+	HTML page("../../../Website/Pages/Results", "results", "Results");
+	CSS sheet("../../../Website/Style", "results");
 
+	sheet.addContent(
+		"BODY\
+		{\
+			background-color: black;\
+			color: white;\
+		}\
+		\
+		table, th, td {\
+		border: 1px solid white;\
+		border - collapse: collapse;\
+		}\
+		"
+		);
+
+	page.addStyleSheet(sheet.getNamePath());
 	page.addElement(createTable(vec));
 
-	page.makeFile();
+	sheet.makeFile();
+	page.makeFile(60000);
 }

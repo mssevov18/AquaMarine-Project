@@ -26,7 +26,8 @@ public:
 	void removeElement(void);
 	void removeElement(const size_t& index);
 	void eraseElements();
-	void addStyleSheet(const std::string& styleSheet);
+	void addStyleSheet(const std::string& styleSheet, const std::string& styleSheetPath);
+	void addStyleSheet(const std::string& styleSheetNamePath);
 	std::string getFilePath();
 
 	void makeFile(int refreshRate = 1000);
@@ -48,6 +49,8 @@ public:
 	void replaceContent(const std::string& newContent);
 
 	std::string getName();
+	std::string getPath();
+	std::string getNamePath();
 
 	void makeFile();
 };

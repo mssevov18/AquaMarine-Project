@@ -29,7 +29,7 @@ void cppToHtmlTest()
 	);
 
 	pages.push_back(HTML(_path, "index", "Main Page"));
-	pages[0].addStyleSheet(styleSheets[0].getName());
+	pages[0].addStyleSheet(styleSheets[0].getName(), _path);
 	pages[0].addElement(Paragraph("", "", "Hello World").toString());
 	pages[0].addElement(Link("", "", "GOOGLE","https://www.google.com/").toString());
 	pages[0].addElement(Paragraph::UnorderedList("", "",
@@ -56,6 +56,8 @@ void cppToHtmlTest()
 		switch (a)
 		{
 		case 8:
+			if (temp.empty())
+				break;
 			temp.pop_back();
 			_putch(a);
 			_putch(' ');
