@@ -6,6 +6,9 @@
 
 #include "framework.h"
 
+
+void menu();
+
 struct Coordinates
 {
 	//TODO Reasearch on ways to properly display (ie: degrees, minutes, seconds)
