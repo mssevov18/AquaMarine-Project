@@ -1,4 +1,5 @@
 #include "WaterBody.h"
+using namespace std;
 
 Coordinates::Coordinates()
 {
@@ -76,7 +77,7 @@ WaterBody::WaterBody(std::string name, Coordinates position, float maxLength, fl
 	// We are assuming that the shape is a square
 	this->perimeter = 2 * (maxWidth + maxLength);
 	this->area      = maxWidth * maxLength;
-	this->volume    = this->area;
+	this->volume    = this->area * maxDepth;
 
 	this->temperature   = temperature;
 	this->isFreshWater  = isFreshWater;
@@ -110,6 +111,45 @@ WaterBody WaterBody::getRandomWaterBody()
 		"Contributor" + std::to_string(rand() % 100));
 }
 
+WaterBody WaterBody::getFromString(const std::string& in)
+{
+	vector<string> vec;
+	string temp;
+	size_t count = 0;
+	for (size_t i = 0; i < in.length(); i++)
+	{
+		switch (in[i])
+		{
+		case delimeterC:
+			vec.push_back(temp);
+			temp.clear();
+			continue;
+		default:
+			temp.push_back(in[i]);
+			break;
+		}
+	}
+	vec.push_back(temp);
+
+	WaterBody out(
+		vec[0],
+			Coordinates(
+				stof(vec[1]),
+				stof(vec[2]),
+				stof(vec[3])
+		),
+		stof(vec[4]),
+		stof(vec[5]),
+		stof(vec[6]),
+		stof(vec[7]),
+		stof(vec[8]),
+		stof(vec[9]),
+		stof(vec[10]),
+		vec[11]
+	);
+	return out;
+}
+
 std::string WaterBody::toHtmlTableRow()
 {
 	return Paragraph("", "",
@@ -127,6 +167,27 @@ std::string WaterBody::toHtmlTableRow()
 		Paragraph("", "", std::to_string(polutionLevel)).toString("td") + "\n" +
 		Paragraph("", "", contributorName).toString("td") + "\n"
 	).toString("tr");
+}
+
+std::string WaterBody::toString()
+{
+	return std::string(
+		name + delimeterS +
+		to_string(position.longitude) + delimeterS +
+		to_string(position.latitude) + delimeterS +
+		to_string(position.altitude) + delimeterS +
+		to_string(maxLength) + delimeterS +
+		to_string(maxWidth) + delimeterS +
+		to_string(maxDepth) + delimeterS +
+		//to_string(perimeter) + delimeterS +
+		//to_string(area) + delimeterS +
+		//to_string(volume) + delimeterS +
+		to_string(temperature) + delimeterS +
+		to_string(isFreshWater) + delimeterS +
+		to_string(phLevel) + delimeterS +
+		to_string(polutionLevel) + delimeterS +
+		contributorName
+	);
 }
 
 void WaterBody::print()

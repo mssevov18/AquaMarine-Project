@@ -11,8 +11,8 @@
 
 int main()
 {
-	menu();
-	cout << "\n\n:)  Menu ends here  (:\n\n\n\n\n\n";
-	//waterBodyTest();
+	//menu();
+	//cout << "\n\n:)  Menu ends here  (:\n\n\n\n\n\n";
+	waterBodyTest();
 	//cppToHtmlTest();
 }

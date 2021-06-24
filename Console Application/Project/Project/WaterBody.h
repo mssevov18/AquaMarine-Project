@@ -25,6 +25,8 @@ struct Coordinates
 	void operator()(float newLon, float newLat, float newAlt);
 };
 
+#define delimeterS "|"
+#define delimeterC '|'
 class WaterBody
 {
 public:
@@ -43,6 +45,7 @@ public:
 	);
 
 	static WaterBody getRandomWaterBody();
+	static WaterBody getFromString(const std::string& in);
 
 private:
 	std::string name; // Name
@@ -62,11 +65,12 @@ private:
 	float polutionLevel; // Percentage of polution
 
 	std::string contributorName; // Contributor Name
-	tm          logTimeStamp;    // Date and time of the last edit
+	//tm          logTimeStamp;    // Date and time of the last edit
 	//TODO implement the timestamp
 
 public:
 	std::string toHtmlTableRow();
+	std::string toString();
 	void print();
 
 	void operator() (
