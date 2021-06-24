@@ -4,7 +4,8 @@
 #include <string>
 
 #include "WaterBody.h"
-#include "framework.h"
+#include "CtHframework.h"
+#include "Logframework.h"
 #include "FileHanlder.h"
 
 void waterBodyTest()
@@ -51,6 +52,7 @@ void waterBodyTest()
 		{\n\
 			background-color: white;\n\
 			color: black;\n\
+			font-size: 16pt\n\
 		}\n\
 		\n\
 		table, th, td {\n\

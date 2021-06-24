@@ -46,3 +46,10 @@ void loadWaterBodiesFromFile(vector<WaterBody>& vec, const string& path, const s
 	while (getline(file,line))
 		vec.push_back(WaterBody::getFromString(line));
 }
+
+void CreateSaveDir()
+{
+	system("mkdir C:/Logs");
+	system("mkdir C:/Logs/Log-class");
+	system("cls");
+}

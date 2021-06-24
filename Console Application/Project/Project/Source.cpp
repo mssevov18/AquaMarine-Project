@@ -2,17 +2,21 @@
 #include <iostream>
 
 #include "WaterBody.h"
-#include "framework.h"
+#include "CtHframework.h"
+#include "Logframework.h"
+#include "UserInterface.h"
+#include "FileHanlder.h"
 
 #include "LibTest.h"
+#include "LogTest.h"
 #include "WaterBodyTest.h"
-#include "UserInterface.h"
 
 
 int main()
 {
 	//menu();
 	//cout << "\n\n:)  Menu ends here  (:\n\n\n\n\n\n";
-	waterBodyTest();
+	//waterBodyTest();
 	//cppToHtmlTest();
+	LogTest();
 }
