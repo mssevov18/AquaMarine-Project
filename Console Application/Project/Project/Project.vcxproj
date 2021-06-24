@@ -144,9 +144,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="UserInterface.cpp" />
     <ClCompile Include="WaterBody.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="UserInterface.h" />
     <ClInclude Include="WaterBody.h" />
     <ClInclude Include="WaterBodyTest.h" />
   </ItemGroup>
