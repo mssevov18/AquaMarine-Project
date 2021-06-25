@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{d3689c86-3744-407e-8941-d1547a22da51}</ProjectGuid>
-    <RootNamespace>CpptoHtml</RootNamespace>
+    <ProjectGuid>{742230b3-47fb-4c99-926d-b5740d0cb473}</ProjectGuid>
+    <RootNamespace>LogClass</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -118,7 +118,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\LogClass</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -134,7 +133,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\LogClass</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -145,21 +143,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="CtHframework.h" />
-    <ClInclude Include="InheritedWebsiteEliments.h" />
-    <ClInclude Include="Website.h" />
-    <ClInclude Include="WebsiteElement.h" />
+    <ClInclude Include="Logframework.h" />
+    <ClInclude Include="LogClass.h" />
+    <ClInclude Include="LogTest.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="InheritedWebsiteEliments.cpp" />
-    <ClCompile Include="LibTest.h" />
-    <ClCompile Include="Website.cpp" />
-    <ClCompile Include="WebsiteElement.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\LogClass\LogClass.vcxproj">
-      <Project>{742230b3-47fb-4c99-926d-b5740d0cb473}</Project>
-    </ProjectReference>
+    <ClCompile Include="LogClass.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
