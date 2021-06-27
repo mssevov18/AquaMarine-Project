@@ -82,3 +82,59 @@ nav ul li a:hover {
     left: 220px;
 }
 
+.button{
+    display: inline-block;
+    padding: 20px 40px;
+    color: rgb(255, 255, 255);
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    text-decoration: none;
+    font-size: 40px;
+    overflow: hidden;
+    transition: 0.2s;
+    font-family: 'Comfortaa';
+}
+.button:hover{
+    color: #80FFDB;
+    background: #7400B8;
+    box-shadow: 0 0 5px #7400B8, 0 0 20px #7400B8, 0 0 40px #7400B8 ;
+}
+
+.button{
+    margin-top: 500px;
+}
+
+.position-button{
+    text-align: center;
+}
+
+.info{
+    margin-top: 500px;
+    margin-bottom: 500px;
+}
+
+.button2{
+    display: inline-block;
+    padding: 20px 40px;
+    color: rgb(255, 255, 255);
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    text-decoration: none;
+    font-size: 40px;
+    overflow: hidden;
+    transition: 0.2s;
+    font-family: 'Comfortaa';
+}
+.button2:hover{
+    color: #7400B8;
+    background: #80FFDB;
+    box-shadow: 0 0 5px #80FFDB, 0 0 20px #80FFDB, 0 0 40px #80FFDB ;
+}
+
+.button2{
+    margin-bottom: 500px;
+}
+
+.post{
+    margin-left: 300px;
+}
