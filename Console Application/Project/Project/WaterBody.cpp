@@ -155,8 +155,8 @@ WaterBody WaterBody::getFromStruct(StructWaterBody in)
 
 std::string WaterBody::toHtmlTableRow(const int& id)
 {
-	return Paragraph("", "",
-		(id != -10 ? Paragraph("", "", std::to_string(id)).toString("td") + '\n' : "") +
+	return Paragraph("content-table", "",
+		(id != -10 ? Paragraph("column", "", std::to_string(id)).toString("td") + '\n' : "") +
 		Paragraph("", "", name).toString("td") + '\n' +
 		position.toHtmlTableData() +
 		Paragraph("", "", std::to_string(maxLength)).toString("td") + '\n' +
@@ -235,7 +235,7 @@ void checkIfUnsigned(const float& in)
 		throw in;
 }
 
-void WaterBody::fChange(wbData field, const float& newData)
+void WaterBody::fChange(int field, const float& newData)
 {
 	switch (field)
 	{
@@ -281,7 +281,7 @@ void WaterBody::fChange(wbData field, const float& newData)
 	}
 }
 
-void WaterBody::cChange(wbData field, const Coordinates& newData)
+void WaterBody::cChange(int field, const Coordinates& newData)
 {
 	switch (field)
 	{
@@ -293,7 +293,7 @@ void WaterBody::cChange(wbData field, const Coordinates& newData)
 	}
 }
 
-void WaterBody::bChange(wbData field, const bool& newData)
+void WaterBody::bChange(int field, const bool& newData)
 {
 	switch (field)
 	{
@@ -305,7 +305,7 @@ void WaterBody::bChange(wbData field, const bool& newData)
 	}
 }
 
-void WaterBody::sChange(wbData field, const std::string& newData)
+void WaterBody::sChange(int field, const std::string& newData)
 {
 	switch (field)
 	{

@@ -5,7 +5,7 @@ using namespace std;
 string createTable(vector<WaterBody*>& vec, const string& __class, const string& __style)
 {
 	Paragraph out(__class, __style,
-		Paragraph("", "", '\t' + 
+		Paragraph("table", "", '\t' + 
 			Paragraph("", "", "Id").toString("th") + '\n' +
 			Paragraph("", "", "Name").toString("th") + '\n' +
 			Paragraph("", "", "Longitude (&deg)").toString("th") + '\n' +
@@ -50,11 +50,4 @@ bool loadWaterBodiesFromFile(vector<WaterBody*>& vec, const string& path, const 
 	while (getline(file, line))
 		vec.push_back(new WaterBody(WaterBody::getRandomWaterBody()));
 	return true;
-}
-
-void CreateSaveDir()
-{
-	system("mkdir C:/Logs");
-	system("mkdir C:/Logs/Log-class");
-	system("cls");
 }
