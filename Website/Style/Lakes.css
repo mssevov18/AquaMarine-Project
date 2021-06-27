@@ -1,6 +1,6 @@
 body{
     margin: 0;
-    padding: 0s;
+    padding: 0;
 }
 .navbar {
     display: flex;
@@ -73,31 +73,3 @@ nav ul li a:hover {
     left: 220px;
 }
 
-.stefan{
-    margin-top: 1000px;
-    margin-bottom: 500px;
-}
-
-.martin{
-    margin-bottom: 500px;
-}
-
-.boris{
-    margin-bottom: 500px;
-}
-
-.niya{
-    margin-bottom: 500px;
-}
-
-.kalina{
-    margin-bottom: 500px;
-}
-
-.ivan{
-    margin-bottom: 500px;
-}
-
-.nikolay{
-    margin-bottom: 500px;
-}
