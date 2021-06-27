@@ -62,11 +62,54 @@ body\n\
 	color: black;\n\
 }\n\
 \n\
-table, th, td\n\
+table { font-family: 'Comfortaa'; }\n\
+\n\
+.table\n\
 {\n\
-	border: 1px solid black;\n\
-	margin: 5px;\n\
-	font-size: 14pt;\n\
+	max-width: 100%;\n\
+	margin: 20px;\n\
+	padding-top: 700px;\n\
+}\n\
+\n\
+.content-table\n\
+{\n\
+	border-collapse: collapse;\n\
+	margin: 25px 0; \n\
+	font-size: 0.9em;\n\
+	min-width: 400px;\n\
+	border-radius: 5px 5px 0 0;\n\
+	overflow: hidden;\n\
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);\n\
+	text-align: center;\n\
+}\n\
+\n\
+thead, th\n\
+{\n\
+	background-color: #6930c3;\n\
+	color: #ffffff;\n\
+	text-align: left;\n\
+	font-weight: bold;\n\
+	text-align: center;\n\
+}\n\
+\n\
+th, td { padding: 12px 15px; }\n\
+\n\
+.content-table, tbody, tr { border-bottom: 1px solid #d3d3d3; }\n\
+\n\
+tr { height: 60px; }\n\
+\n\
+td:hover\n\
+{\n\
+	background: aquamarine;\n\
+	font-weight: bold;\n\
+	color: black;\n\
+}\n\
+\n\
+.column\n\
+{\n\
+	background: rgba(143, 82, 255, 0.835);\n\
+	font-weight: bold;\n\
+	color: white;\n\
 }\n\
 "
 );
@@ -77,7 +120,6 @@ table, th, td\n\
 
 	char choice;
 	bool inLoop = true;
-	bool tempb;
 	vector<WaterBody*> vec;
 	string temp;
 	
@@ -93,7 +135,8 @@ table, th, td\n\
 		// Load
 		cout << "\
 Main Menu_indev\n\
-A. Add\n";
+A. Add\n\
+";
 
 		if (!vec.empty())
 			cout << "\
@@ -101,9 +144,9 @@ D. Delete\n\
 E. Edit\n\
 Q. Print\n\
 S. Sort\n\
+W. Open Website\n\
 Enter. Upload To Site\n\
 Ctrl + S. Save to file\n\
-\n\
 ";
 
 		cout << "\
@@ -123,23 +166,33 @@ Esc. Stop the program\n\n\
 			break;
 		case 'D': // Delete
 		case 'd':
-			Delete(vec);
+			if (!vec.empty())
+				Delete(vec);
 			break;
 		case 'E': // Edit
 		case 'e':
+			if (!vec.empty())
+			{
+			}
 			break;
 		case 'Q': // Print
 		case 'q':
-			Print(vec);
+			if (!vec.empty())
+				Print(vec);
 			break;
 		case 'S': // Sort
 		case 's':
 			break;
+		case 'W': // Website
+		case 'w':
+			break;
 		case 13:  // Enter - Upload
-			Upload(vec, page);
+			if (!vec.empty())
+				Upload(vec, page);
 			break;
 		case 19:  // Ctrl + S - Save
-			Save(vec);
+			if (!vec.empty())
+				Save(vec);
 			break;
 		case 12:  // Ctrl + L - Load
 			Load(vec);
@@ -220,38 +273,32 @@ void Delete(vector<WaterBody*>& vec)
 
 	cout << "\
 Main Menu_indev\n\
-A. Add\n";
-
-	if (!vec.empty())
-		cout << "\
+A. Add\n\
 D. Delete\n\
 E. Edit\n\
 Q. Print\n\
 S. Sort\n\
+W. Open Website\n\
 Enter. Upload To Site\n\
 Ctrl + S. Save to file\n\
-\n\
-";
-
-	cout << "\
 Ctrl + L. Load from file\n\
 Esc. Stop the program\n\n\
 ";
 
 	cout << "\
 \nA. Delete all\
-\n(num). Delete by index\
+\n(num { 0 -> " << vec.size() - 1 << "}). Delete by index\
 \nEsc. Go Back\n\n";
-	int choice = _lgetch();
+	int choice;
+	cin >> choice;
 	switch (choice)
 	{
-	case 'A': //All
-	case 'a':
+	case -1: //All
 		vec.clear();
 		cout << "All Data has been Deleted\n";
 		break;
-	case 27:
-		break;
+	case -2:
+		return;
 	default:
 		choice -= 48;
 		if (choice >= vec.size())
@@ -285,54 +332,47 @@ void Print(std::vector<WaterBody*>& vec)
 
 	cout << "\
 Main Menu_indev\n\
-A. Add\n";
-
-	if (!vec.empty())
-		cout << "\
+A. Add\n\
 D. Delete\n\
 E. Edit\n\
 Q. Print\n\
 S. Sort\n\
+W. Open Website\n\
 Enter. Upload To Site\n\
 Ctrl + S. Save to file\n\
-\n\
-";
-
-	cout << "\
 Ctrl + L. Load from file\n\
 Esc. Stop the program\n\n\
 ";
 
 	cout << "\
-\nA. Print all\
-\n(num). Print by index\
-\nEsc. Go Back\n\n";
-	int choice = _lgetch();
+\n-1. Print all\
+\n(num { 0 -> " << vec.size() - 1 << "}). Print by index\
+\n-2. Go Back\n\n";
+	int choice;
+	cin >> choice;
 	switch (choice)
 	{
-	case 'A': //All
-	case 'a':
+	case -1: //All
 		for (size_t i = 0; i < vec.size(); i++)
 		{
 			vec[i]->print(i);
 			cout << '\n';
 		}
 		break;
-	case 27:
-		break;
+	case -2:
+		return;
 	default:
-		if (choice < 48)
+		if (choice < 0)
 			throw;
-		if (choice - 48 >= vec.size())
+		if (choice >= vec.size())
 			throw;
-		vec[choice - 48]->print(choice - 48);
-		if (_lgetch() == 27)
-			return;
+		vec[choice]->print(choice);
 		if (vec.size() > 0)
 			Print(vec);
 		break;
 	}
-	_lgetch();
+	if (_lgetch() == 27)
+		return;
 }
 
 void Sort(std::vector<WaterBody*>& vec)
@@ -341,9 +381,10 @@ void Sort(std::vector<WaterBody*>& vec)
 
 void Upload(std::vector<WaterBody*>& vec, HTML& page)
 {
+	page.addElement(Paragraph("", "", to_string(vec.size()) + " Entries in the database").toString());
+	page.addElement(WebsiteElement("br", "", "").toString());
 	page.addElement(Paragraph("", "", createTable(vec)).toString("center", true));
-	bool tempb = page.makeFile(60000);
-	if (tempb)
+	if (page.makeFile(60000))
 		cout << "Successfully uploaded (" << vec.size() << ") Water Bodies to webpage";
 	else
 		cout << "Upload was unsuccessful";
@@ -352,8 +393,7 @@ void Upload(std::vector<WaterBody*>& vec, HTML& page)
 
 void Save(std::vector<WaterBody*>& vec)
 {
-	bool tempb = saveWaterBodiesToFile(vec, "", "../data.txt");
-	if (tempb)
+	if (saveWaterBodiesToFile(vec, "", "../data.txt"))
 		cout << "Successfully saved (" << vec.size() << ") Water Bodies";
 	else
 		cout << "Save was unsuccessful";
@@ -363,8 +403,7 @@ void Save(std::vector<WaterBody*>& vec)
 void Load(std::vector<WaterBody*>& vec)
 {
 	vec.clear();
-	bool tempb = loadWaterBodiesFromFile(vec, "", "../data.txt");
-	if (tempb)
+	if (loadWaterBodiesFromFile(vec, "", "../data.txt"))
 		cout << "Successfully loaded (" << vec.size() << ") Water Bodies";
 	else
 		cout << "Load was unsuccessful";

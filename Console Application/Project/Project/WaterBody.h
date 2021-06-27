@@ -27,43 +27,22 @@ struct Coordinates
 	void operator()(float newLon, float newLat, float newAlt);
 };
 
-
-enum class wbData
-{
-	NAME,
-	POSITION,
-	LONGITUDE,
-	LATITUDE,
-	ALTITUDE,
-	MAXLENGTH,
-	MAXWIDTH,
-	MAXDEPTH,
-	PERIMETER,
-	AREA,
-	VOLUME,
-	TEMPERATURE,
-	ISFRESHWATER,
-	PHLEVEL,
-	POLLUTIONLEVEL,
-	CONTRIBUTORNAME
-};
-
-#define s_name      wbData::NAME
-#define c_pos       wbData::POSITION
-#define f_lon       wbData::LONGITUDE
-#define f_lat       wbData::LATITUDE
-#define f_alt       wbData::ALTITUDE
-#define f_len       wbData::MAXLENGTH
-#define f_wid       wbData::MAXWIDTH
-#define f_dep       wbData::MAXDEPTH
-#define f_per       wbData::PERIMETER
-#define f_area      wbData::AREA
-#define f_vol       wbData::VOLUME
-#define f_temp      wbData::TEMPERATURE
-#define b_isfresh   wbData::ISFRESHWATER
-#define f_ph        wbData::PHLEVEL
-#define f_pollution wbData::POLLUTIONLEVEL
-#define s_cname     wbData::CONTRIBUTORNAME
+#define s_name      0
+#define c_pos       1
+#define f_lon       2
+#define f_lat       3
+#define f_alt       4
+#define f_len       5
+#define f_wid       6
+#define f_dep       7
+#define f_per       8
+#define f_area      9
+#define f_vol       10
+#define f_temp      11
+#define b_isfresh   12
+#define f_ph        13
+#define f_pollution 14
+#define s_cname     15
 
 #define delimeterC '|'
 
@@ -145,10 +124,10 @@ public:
 		std::string contributorName
 		);
 
-	void fChange(wbData field, const float& newData);
-	void cChange(wbData field, const Coordinates& newData);
-	void bChange(wbData field, const bool& newData);
-	void sChange(wbData field, const std::string& newData);
+	void fChange(int field, const float& newData);
+	void cChange(int field, const Coordinates& newData);
+	void bChange(int field, const bool& newData);
+	void sChange(int field, const std::string& newData);
 
 private:
 	void calculate();
