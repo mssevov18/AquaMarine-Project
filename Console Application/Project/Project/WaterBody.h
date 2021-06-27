@@ -46,24 +46,6 @@ struct Coordinates
 
 #define delimeterC '|'
 
-struct StructWaterBody
-{
-	std::string name; // Name
-
-	Coordinates position; // Location of the Water Body
-
-	float maxLength; // Lenght from the northmost point to the southmost point
-	float maxWidth;  // Lenght from the eastmost point to the westmost point
-	float maxDepth;  // Lenght from deepest point of the Body to it's surface
-
-	float temperature;   // Average water temperature
-	bool  isFreshWater;  // true - it's a Fresh Water Body | false - it's a Salt Water Body
-	float phLevel;       // Average Ph Level
-	float pollutionLevel; // Percentage of pollution
-
-	std::string contributorName; // Contributor Name
-};
-
 class WaterBody
 {
 public:
@@ -83,7 +65,6 @@ public:
 
 	static WaterBody getRandomWaterBody();
 	static WaterBody getFromString(const std::string& in);
-	static WaterBody getFromStruct(StructWaterBody in);
 
 private:
 	std::string name; // Name
@@ -123,6 +104,11 @@ public:
 		float pollutionLevel,
 		std::string contributorName
 		);
+
+	//TODO add these vvv for sort func
+	bool isEqual(const WaterBody& rhs, int mode);
+	bool isGreater(const WaterBody& rhs, int mode);
+	bool isLesser(const WaterBody& rhs, int mode);
 
 	void fChange(int field, const float& newData);
 	void cChange(int field, const Coordinates& newData);

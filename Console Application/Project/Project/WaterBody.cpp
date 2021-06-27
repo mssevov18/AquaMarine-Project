@@ -148,11 +148,6 @@ WaterBody WaterBody::getFromString(const std::string& in)
 	return out;
 }
 
-WaterBody WaterBody::getFromStruct(StructWaterBody in)
-{
-	return WaterBody(in.name, in.position, in.maxLength, in.maxWidth, in.maxDepth, in.temperature, in.isFreshWater, in.phLevel, in.pollutionLevel, in.contributorName);;
-}
-
 std::string WaterBody::toHtmlTableRow(const int& id)
 {
 	return Paragraph("content-table", "",
@@ -227,6 +222,21 @@ void WaterBody::operator() (std::string name, Coordinates position, float maxLen
 	this->pollutionLevel = pollutionLevel;
 
 	this->contributorName = contributorName;
+}
+
+bool WaterBody::isEqual(const WaterBody& rhs, int mode)
+{
+	return false;
+}
+
+bool WaterBody::isGreater(const WaterBody& rhs, int mode)
+{
+	return false;
+}
+
+bool WaterBody::isLesser(const WaterBody& rhs, int mode)
+{
+	return false;
 }
 
 void checkIfUnsigned(const float& in)
