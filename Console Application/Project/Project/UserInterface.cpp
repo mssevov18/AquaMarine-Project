@@ -50,6 +50,30 @@ void menu()
 	}
 }
 
+void printMenuOptions(vector<WaterBody*> vec)
+{
+	cout << "\
+Main Menu_indev\n\
+A. Add\n\
+W. Open Website\n\
+";
+
+	if (!vec.empty())
+		cout << "\
+D. Delete\n\
+E. Edit\n\
+Q. Print\n\
+S. Sort\n\
+Enter. Upload To Site\n\
+Ctrl + S. Save to file\n\
+";
+
+	cout << "\
+Ctrl + L. Load from file\n\
+Esc. Stop the program\n\n\
+";
+}
+
 void menu_indev()
 {
 	HTML page("../../../Website/Pages/Results", "results", "Results");
@@ -133,26 +157,9 @@ td:hover\n\
 		// UploadToSite
 		// Save
 		// Load
-		cout << "\
-Main Menu_indev\n\
-A. Add\n\
-";
 
-		if (!vec.empty())
-			cout << "\
-D. Delete\n\
-E. Edit\n\
-Q. Print\n\
-S. Sort\n\
-W. Open Website\n\
-Enter. Upload To Site\n\
-Ctrl + S. Save to file\n\
-";
+		printMenuOptions(vec);
 
-		cout << "\
-Ctrl + L. Load from file\n\
-Esc. Stop the program\n\n\
-";
 		choice = _lgetch();
 		switch (choice)
 		{
@@ -182,9 +189,13 @@ Esc. Stop the program\n\n\
 			break;
 		case 'S': // Sort
 		case 's':
+			if (!vec.empty())
+			{
+			}
 			break;
 		case 'W': // Website
 		case 'w':
+			system("start ../../../Website/Pages/Results/results.html");
 			break;
 		case 13:  // Enter - Upload
 			if (!vec.empty())
@@ -222,45 +233,55 @@ void Random(std::vector<WaterBody*>& vec)
 
 void Add(vector<WaterBody*>& vec)
 {
-	StructWaterBody tempStruct;
+	std::string name;
+	Coordinates position;
+	float maxLength;
+	float maxWidth;
+	float maxDepth;
+	float temperature;
+	bool  isFreshWater;
+	float phLevel;
+	float pollutionLevel;
+	std::string contributorName;
+
 	cout << "WaterBody:\n- - Name (word): ";
-	cin >> tempStruct.name;
+	cin >> name;
 	cin.clear();
 	cout << "- - Longitude (float): ";
-	cin >> tempStruct.position.longitude;
+	cin >> position.longitude;
 	cin.clear();
 	cout << "- - Latitude (float): ";
-	cin >> tempStruct.position.latitude;
+	cin >> position.latitude;
 	cin.clear();
 	cout << "- - Altitude (float): ";
-	cin >> tempStruct.position.altitude;
+	cin >> position.altitude;
 	cin.clear();
 	cout << "- - Length (float): ";
-	cin >> tempStruct.maxLength;
+	cin >> maxLength;
 	cin.clear();
 	cout << "- - Width (float): ";
-	cin >> tempStruct.maxWidth;
+	cin >> maxWidth;
 	cin.clear();
 	cout << "- - Depth (float): ";
-	cin >> tempStruct.maxDepth;
+	cin >> maxDepth;
 	cin.clear();
 	cout << "- - Temperature (float): ";
-	cin >> tempStruct.temperature;
+	cin >> temperature;
 	cin.clear();
 	cout << "- - Is Fresh Water (1, 0): ";
-	cin >> tempStruct.isFreshWater;
+	cin >> isFreshWater;
 	cin.clear();
 	cout << "- - Ph Level (float): ";
-	cin >> tempStruct.phLevel;
+	cin >> phLevel;
 	cin.clear();
 	cout << "- - Pollution level (float %): ";
-	cin >> tempStruct.pollutionLevel;
+	cin >> pollutionLevel;
 	cin.clear();
 	cout << "- - Contributor Name (word): ";
-	cin >> tempStruct.contributorName;
+	cin >> contributorName;
 	cin.clear();
 
-	vec.push_back(new WaterBody(WaterBody::getFromStruct(tempStruct)));
+	vec.push_back(new WaterBody(WaterBody(name, position, maxLength, maxWidth, maxDepth, temperature, isFreshWater, phLevel, pollutionLevel, contributorName	)));
 	cout << "\nSuccessfully added:\n";
 	vec[vec.size() - 1]->print();
 
@@ -271,24 +292,12 @@ void Delete(vector<WaterBody*>& vec)
 {
 	system("CLS");
 
-	cout << "\
-Main Menu_indev\n\
-A. Add\n\
-D. Delete\n\
-E. Edit\n\
-Q. Print\n\
-S. Sort\n\
-W. Open Website\n\
-Enter. Upload To Site\n\
-Ctrl + S. Save to file\n\
-Ctrl + L. Load from file\n\
-Esc. Stop the program\n\n\
-";
+	printMenuOptions(vec);
 
 	cout << "\
-\nA. Delete all\
+\n-1. Delete all\
 \n(num { 0 -> " << vec.size() - 1 << "}). Delete by index\
-\nEsc. Go Back\n\n";
+\n-2. Go Back\n\n";
 	int choice;
 	cin >> choice;
 	switch (choice)
@@ -300,9 +309,8 @@ Esc. Stop the program\n\n\
 	case -2:
 		return;
 	default:
-		choice -= 48;
 		if (choice >= vec.size())
-			throw;
+			throw "Out of vector range";
 		vec[choice]->print(choice);
 		cout << "\nEnter to delete, Escape to cancel\n";
 		switch (_lgetch())
@@ -330,19 +338,7 @@ void Print(std::vector<WaterBody*>& vec)
 {
 	system("CLS");
 
-	cout << "\
-Main Menu_indev\n\
-A. Add\n\
-D. Delete\n\
-E. Edit\n\
-Q. Print\n\
-S. Sort\n\
-W. Open Website\n\
-Enter. Upload To Site\n\
-Ctrl + S. Save to file\n\
-Ctrl + L. Load from file\n\
-Esc. Stop the program\n\n\
-";
+	printMenuOptions(vec);
 
 	cout << "\
 \n-1. Print all\
@@ -381,7 +377,10 @@ void Sort(std::vector<WaterBody*>& vec)
 
 void Upload(std::vector<WaterBody*>& vec, HTML& page)
 {
-	page.addElement(Paragraph("", "", to_string(vec.size()) + " Entries in the database").toString());
+	page.eraseElements();
+	page.addElement(Paragraph("", "", "Results from the console application database").toString("h1"));
+	page.addElement(WebsiteElement("hr", "", "").toString());
+	page.addElement(Paragraph("", "", to_string(vec.size()) + " Entries in the database").toString("h4"));
 	page.addElement(WebsiteElement("br", "", "").toString());
 	page.addElement(Paragraph("", "", createTable(vec)).toString("center", true));
 	if (page.makeFile(60000))

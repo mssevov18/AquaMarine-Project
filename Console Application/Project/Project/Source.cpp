@@ -9,11 +9,21 @@
 
 int main()
 {
+	addline();
 	addlog($start, "Program has started");
 
-	//menu();
-	//cout << "\n\n:)  Menu ends here  (:\n\n\n\n\n\n";
-	menu_indev();
+	try
+	{
+		menu_indev();
+	}
+	catch (std::string text)
+	{
+		std::cout << text;
+	}
+	catch (...)
+	{
+
+	}
 
 	addKeyLog();
 	addline();

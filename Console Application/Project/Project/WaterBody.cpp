@@ -148,11 +148,6 @@ WaterBody WaterBody::getFromString(const std::string& in)
 	return out;
 }
 
-WaterBody WaterBody::getFromStruct(StructWaterBody in)
-{
-	return WaterBody(in.name, in.position, in.maxLength, in.maxWidth, in.maxDepth, in.temperature, in.isFreshWater, in.phLevel, in.pollutionLevel, in.contributorName);;
-}
-
 std::string WaterBody::toHtmlTableRow(const int& id)
 {
 	return Paragraph("content-table", "",
