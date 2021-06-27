@@ -57,7 +57,7 @@ void printMenuOptions(vector<WaterBody*> vec)
 	cout << "\
 Main Menu\n\
 A. Add\n\
-W. Open Website\n\
+W. Open Webpage\n\
 ";
 
 	if (!vec.empty())
@@ -72,6 +72,7 @@ Ctrl + S. Save to file\n\
 
 	cout << "\
 Ctrl + L. Load from file\n\
+Ctrl + W. Unload from Webpage\n\
 Esc. Stop the program\n\n\
 ";
 }
@@ -192,9 +193,9 @@ td:hover\n\
 			break;
 		case 'E': // Edit
 		case 'e':
-			if (!vec.empty())
-			{
-			}
+			//if (!vec.empty())
+			//{
+			//}
 			break;
 		case 'Q': // Print
 		case 'q':
@@ -203,8 +204,8 @@ td:hover\n\
 			break;
 		case 'S': // Sort
 		case 's':
-			if (!vec.empty())
-				Sort(vec);
+			//if (!vec.empty())
+			//	Sort(vec);
 			break;
 		case 'W': // Website
 		case 'w':
@@ -220,6 +221,9 @@ td:hover\n\
 			break;
 		case 12:  // Ctrl + L - Load
 			Load(vec);
+			break;
+		case 23:  // Ctrl + W - Unload from Webpage
+			Unload(vec, page);
 			break;
 		case 27:  // Escape - Stop
 			inLoop = false;
@@ -388,41 +392,6 @@ void Print(std::vector<WaterBody*>& vec)
 
 void Sort(std::vector<WaterBody*>& vec)
 {
-	system("CLS");
-
-	printMenuOptions(vec);
-
-	cout << "\
-\nA. Print all\
-\n(num { 0 -> " << vec.size() - 1 << "}). Print by index\
-\nE. Go Back\n\n";
-	std::string input;
-	cin >> input;
-	int choice = std::stoi(input);
-	switch (input[0])
-	{
-	case 'A': //All
-	case 'a':
-		for (int i = 0; i < vec.size(); i++)
-		{
-			vec[i]->print(i);
-			cout << '\n';
-		}
-		break;
-	case 'E':
-	case 'e':
-		return;
-	default:
-		if (choice < 0)
-			throw "Under 0";
-		if (choice >= vec.size())
-			throw "Over vector range";
-		vec[choice]->print(choice);
-		break;
-	}
-	_lgetch();
-	if (vec.size() > 0)
-		Print(vec);
 }
 
 void Upload(std::vector<WaterBody*>& vec, HTML& page)
@@ -432,7 +401,6 @@ void Upload(std::vector<WaterBody*>& vec, HTML& page)
 	page.addElement(WebsiteElement("", "", "").toString("hr"));
 	page.addElement(Paragraph("", "", to_string(vec.size()) + " Entries in the database").toString("h2"));
 	page.addElement(WebsiteElement("", "", "").toString("br"));
-	//page.addElement(Paragraph("", "", createTable(vec)).toString("center", true));
 	page.addLine();
 	page.addElement(createTable(vec,"table",""));
 	page.addLine();
@@ -441,6 +409,15 @@ void Upload(std::vector<WaterBody*>& vec, HTML& page)
 	else
 		cout << "Upload was unsuccessful";
 	_lgetch();
+}
+
+void Unload(std::vector<WaterBody*>& vec, HTML& page)
+{
+	page.eraseElements();
+	page.addElement(Paragraph("", "", "No data loaded.").toString("h1"));
+	page.addElement(WebsiteElement("", "", "").toString("hr"));
+	page.addElement(Paragraph("", "", "0 Entries in the database").toString("h2"));
+	page.makeFile(60000);
 }
 
 void Save(std::vector<WaterBody*>& vec)
@@ -476,12 +453,8 @@ void CheckStingInput(std::string &test)
 	
 	//check if there is space or delimeterC and replace with underscore
 	for (int i = 0; i < test.length(); i++)
-	{
 		if (test[i] == ' ' or test[i] == '|')
-		{
 			test[i] = '_';
-		}
-	}
 
 }
 
@@ -512,7 +485,7 @@ void CheckBoolInput(bool& test)
 void ErrorMessageForInput() 
 {
 	cout << "\n!Error with input value!\n";
-	cout << "- -Try Again: ";
+	cout << "- - Try Again: ";
 }
 
 void RepairIfCinFail()

@@ -26,6 +26,8 @@ void Sort(std::vector<WaterBody*>& vec);
 
 void Upload(std::vector<WaterBody*>& vec, HTML& page);
 
+void Unload(std::vector<WaterBody*>& vec, HTML& page);
+
 void Save(std::vector<WaterBody*>& vec);
 
 void Load(std::vector<WaterBody*>& vec);
