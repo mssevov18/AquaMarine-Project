@@ -38,5 +38,5 @@ Open your CMD and paste this code:
 
 # 💻 Interface
 
-<img src="https://i.imgur.com/ejzjgId.png" align="center">
+<img src="https://i.imgur.com/jngQhq4.png" align="center">
 

@@ -29,3 +29,13 @@ void Upload(std::vector<WaterBody*>& vec, HTML& page);
 void Save(std::vector<WaterBody*>& vec);
 
 void Load(std::vector<WaterBody*>& vec);
+
+void CheckStingInput(std::string &test);
+
+void CheckNumberInput(float &test);
+
+void CheckBoolInput(bool &test);
+
+void ErrorMessageForInput();
+
+void RepairIfCinFail();

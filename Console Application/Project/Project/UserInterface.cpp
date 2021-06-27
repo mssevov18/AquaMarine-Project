@@ -244,41 +244,42 @@ void Add(vector<WaterBody*>& vec)
 	std::string contributorName;
 
 	cout << "WaterBody:\n- - Name (word): ";
-	cin >> name;
-	cin.clear();
+	getline(cin, name);
+	CheckStingInput(name);
 	cout << "- - Longitude (float): ";
 	cin >> position.longitude;
-	cin.clear();
+	CheckNumberInput(position.longitude);
 	cout << "- - Latitude (float): ";
 	cin >> position.latitude;
-	cin.clear();
+	CheckNumberInput(position.latitude);
 	cout << "- - Altitude (float): ";
 	cin >> position.altitude;
-	cin.clear();
+	CheckNumberInput(position.altitude);
 	cout << "- - Length (float): ";
 	cin >> maxLength;
-	cin.clear();
+	CheckNumberInput(maxLength);
 	cout << "- - Width (float): ";
 	cin >> maxWidth;
-	cin.clear();
+	CheckNumberInput(maxWidth);
 	cout << "- - Depth (float): ";
 	cin >> maxDepth;
-	cin.clear();
+	CheckNumberInput(maxDepth);
 	cout << "- - Temperature (float): ";
 	cin >> temperature;
-	cin.clear();
+	CheckNumberInput(temperature);
 	cout << "- - Is Fresh Water (1, 0): ";
 	cin >> isFreshWater;
-	cin.clear();
+	CheckBoolInput(isFreshWater);
 	cout << "- - Ph Level (float): ";
 	cin >> phLevel;
-	cin.clear();
+	CheckNumberInput(phLevel);
 	cout << "- - Pollution level (float %): ";
 	cin >> pollutionLevel;
-	cin.clear();
+	CheckNumberInput(pollutionLevel);
 	cout << "- - Contributor Name (word): ";
-	cin >> contributorName;
-	cin.clear();
+	cin.ignore();
+	getline(cin, contributorName);
+	CheckStingInput(contributorName);
 
 	vec.push_back(new WaterBody(WaterBody(name, position, maxLength, maxWidth, maxDepth, temperature, isFreshWater, phLevel, pollutionLevel, contributorName	)));
 	cout << "\nSuccessfully added:\n";
@@ -447,4 +448,63 @@ void Load(std::vector<WaterBody*>& vec)
 	else
 		cout << "Load was unsuccessful";
 	_lgetch();
+}
+
+void CheckStingInput(std::string &test)
+{
+	// first check string < 2 letter
+	if (test.length() <= 2)
+	{
+		ErrorMessageForInput();
+		RepairIfCinFail();
+		getline(cin, test);
+		cout << "\n";
+		CheckStingInput(test);
+	}
+	
+	//check if there is space or delimeterC and replace with underscore
+	for (int i = 0; i < test.length(); i++)
+	{
+		if (test[i] == ' ' or test[i] == '|')
+		{
+			test[i] = '_';
+		}
+	}
+
+}
+
+void CheckNumberInput(float &test)
+{
+	// check if number is letter
+	if (cin.fail()) {
+		ErrorMessageForInput();
+		RepairIfCinFail();
+		cin >> test;
+		cout << "\n";
+		CheckNumberInput(test);
+	}
+}
+
+void CheckBoolInput(bool& test)
+{
+	// check if bool is 1, 0
+	if (cin.fail()) {
+		ErrorMessageForInput();
+		RepairIfCinFail();
+		cin >> test;
+		cout << "\n";
+		CheckBoolInput(test);
+	}
+}
+
+void ErrorMessageForInput() 
+{
+	cout << "\n!Error with input value!\n";
+	cout << "- -Try Again: ";
+}
+
+void RepairIfCinFail()
+{
+	cin.clear();
+	cin.ignore( INT_MAX , '\n'); // INT_MAX is for igrnore 2147483647 caracteres if cin fail
 }
