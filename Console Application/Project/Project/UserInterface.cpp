@@ -50,6 +50,30 @@ void menu()
 	}
 }
 
+void printMenuOptions(vector<WaterBody*> vec)
+{
+	cout << "\
+Main Menu_indev\n\
+A. Add\n\
+W. Open Website\n\
+";
+
+	if (!vec.empty())
+		cout << "\
+D. Delete\n\
+E. Edit\n\
+Q. Print\n\
+S. Sort\n\
+Enter. Upload To Site\n\
+Ctrl + S. Save to file\n\
+";
+
+	cout << "\
+Ctrl + L. Load from file\n\
+Esc. Stop the program\n\n\
+";
+}
+
 void menu_indev()
 {
 	HTML page("../../../Website/Pages/Results", "results", "Results");
@@ -62,11 +86,54 @@ body\n\
 	color: black;\n\
 }\n\
 \n\
-table, th, td\n\
+table { font-family: 'Comfortaa'; }\n\
+\n\
+.table\n\
 {\n\
-	border: 1px solid black;\n\
-	margin: 5px;\n\
-	font-size: 14pt;\n\
+	max-width: 100%;\n\
+	margin: 20px;\n\
+	padding-top: 700px;\n\
+}\n\
+\n\
+.content-table\n\
+{\n\
+	border-collapse: collapse;\n\
+	margin: 25px 0; \n\
+	font-size: 0.9em;\n\
+	min-width: 400px;\n\
+	border-radius: 5px 5px 0 0;\n\
+	overflow: hidden;\n\
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);\n\
+	text-align: center;\n\
+}\n\
+\n\
+thead, th\n\
+{\n\
+	background-color: #6930c3;\n\
+	color: #ffffff;\n\
+	text-align: left;\n\
+	font-weight: bold;\n\
+	text-align: center;\n\
+}\n\
+\n\
+th, td { padding: 12px 15px; }\n\
+\n\
+.content-table, tbody, tr { border-bottom: 1px solid #d3d3d3; }\n\
+\n\
+tr { height: 60px; }\n\
+\n\
+td:hover\n\
+{\n\
+	background: #B5F4E5;\n\
+	font-weight: bold;\n\
+	color: black;\n\
+}\n\
+\n\
+.column\n\
+{\n\
+	background: rgba(143, 82, 255, 0.835);\n\
+	font-weight: bold;\n\
+	color: white;\n\
 }\n\
 "
 );
@@ -77,7 +144,6 @@ table, th, td\n\
 
 	char choice;
 	bool inLoop = true;
-	bool tempb;
 	vector<WaterBody*> vec;
 	string temp;
 	
@@ -91,25 +157,9 @@ table, th, td\n\
 		// UploadToSite
 		// Save
 		// Load
-		cout << "\
-Main Menu_indev\n\
-A. Add\n";
 
-		if (!vec.empty())
-			cout << "\
-D. Delete\n\
-E. Edit\n\
-Q. Print\n\
-S. Sort\n\
-Enter. Upload To Site\n\
-Ctrl + S. Save to file\n\
-\n\
-";
+		printMenuOptions(vec);
 
-		cout << "\
-Ctrl + L. Load from file\n\
-Esc. Stop the program\n\n\
-";
 		choice = _lgetch();
 		switch (choice)
 		{
@@ -123,23 +173,36 @@ Esc. Stop the program\n\n\
 			break;
 		case 'D': // Delete
 		case 'd':
-			Delete(vec);
+			if (!vec.empty())
+				Delete(vec);
 			break;
 		case 'E': // Edit
 		case 'e':
+			if (!vec.empty())
+			{
+			}
 			break;
 		case 'Q': // Print
 		case 'q':
-			Print(vec);
+			if (!vec.empty())
+				Print(vec);
 			break;
 		case 'S': // Sort
 		case 's':
+			if (!vec.empty())
+				Sort(vec);
+			break;
+		case 'W': // Website
+		case 'w':
+			system("start ../../../Website/Pages/Results/results.html");
 			break;
 		case 13:  // Enter - Upload
-			Upload(vec, page);
+			if (!vec.empty())
+				Upload(vec, page);
 			break;
 		case 19:  // Ctrl + S - Save
-			Save(vec);
+			if (!vec.empty())
+				Save(vec);
 			break;
 		case 12:  // Ctrl + L - Load
 			Load(vec);
@@ -169,45 +232,55 @@ void Random(std::vector<WaterBody*>& vec)
 
 void Add(vector<WaterBody*>& vec)
 {
-	StructWaterBody tempStruct;
+	std::string name;
+	Coordinates position;
+	float maxLength;
+	float maxWidth;
+	float maxDepth;
+	float temperature;
+	bool  isFreshWater;
+	float phLevel;
+	float pollutionLevel;
+	std::string contributorName;
+
 	cout << "WaterBody:\n- - Name (word): ";
-	cin >> tempStruct.name;
+	cin >> name;
 	cin.clear();
 	cout << "- - Longitude (float): ";
-	cin >> tempStruct.position.longitude;
+	cin >> position.longitude;
 	cin.clear();
 	cout << "- - Latitude (float): ";
-	cin >> tempStruct.position.latitude;
+	cin >> position.latitude;
 	cin.clear();
 	cout << "- - Altitude (float): ";
-	cin >> tempStruct.position.altitude;
+	cin >> position.altitude;
 	cin.clear();
 	cout << "- - Length (float): ";
-	cin >> tempStruct.maxLength;
+	cin >> maxLength;
 	cin.clear();
 	cout << "- - Width (float): ";
-	cin >> tempStruct.maxWidth;
+	cin >> maxWidth;
 	cin.clear();
 	cout << "- - Depth (float): ";
-	cin >> tempStruct.maxDepth;
+	cin >> maxDepth;
 	cin.clear();
 	cout << "- - Temperature (float): ";
-	cin >> tempStruct.temperature;
+	cin >> temperature;
 	cin.clear();
 	cout << "- - Is Fresh Water (1, 0): ";
-	cin >> tempStruct.isFreshWater;
+	cin >> isFreshWater;
 	cin.clear();
 	cout << "- - Ph Level (float): ";
-	cin >> tempStruct.phLevel;
+	cin >> phLevel;
 	cin.clear();
 	cout << "- - Pollution level (float %): ";
-	cin >> tempStruct.pollutionLevel;
+	cin >> pollutionLevel;
 	cin.clear();
 	cout << "- - Contributor Name (word): ";
-	cin >> tempStruct.contributorName;
+	cin >> contributorName;
 	cin.clear();
 
-	vec.push_back(new WaterBody(WaterBody::getFromStruct(tempStruct)));
+	vec.push_back(new WaterBody(WaterBody(name, position, maxLength, maxWidth, maxDepth, temperature, isFreshWater, phLevel, pollutionLevel, contributorName	)));
 	cout << "\nSuccessfully added:\n";
 	vec[vec.size() - 1]->print();
 
@@ -218,44 +291,30 @@ void Delete(vector<WaterBody*>& vec)
 {
 	system("CLS");
 
-	cout << "\
-Main Menu_indev\n\
-A. Add\n";
-
-	if (!vec.empty())
-		cout << "\
-D. Delete\n\
-E. Edit\n\
-Q. Print\n\
-S. Sort\n\
-Enter. Upload To Site\n\
-Ctrl + S. Save to file\n\
-\n\
-";
-
-	cout << "\
-Ctrl + L. Load from file\n\
-Esc. Stop the program\n\n\
-";
+	printMenuOptions(vec);
 
 	cout << "\
 \nA. Delete all\
-\n(num). Delete by index\
-\nEsc. Go Back\n\n";
-	int choice = _lgetch();
-	switch (choice)
+\n(num { 0 -> " << vec.size() - 1 << "}). Delete by index\
+\nE. Go Back\n\n";
+	std::string input;
+	cin >> input;
+	int choice = std::stoi(input);
+	switch (input[0])
 	{
 	case 'A': //All
 	case 'a':
 		vec.clear();
 		cout << "All Data has been Deleted\n";
 		break;
-	case 27:
-		break;
+	case 'E':
+	case 'e':
+		return;
 	default:
-		choice -= 48;
+		if (choice < 0)
+			throw "Under 0";
 		if (choice >= vec.size())
-			throw;
+			throw "Over vector range";
 		vec[choice]->print(choice);
 		cout << "\nEnter to delete, Escape to cancel\n";
 		switch (_lgetch())
@@ -269,10 +328,10 @@ Esc. Stop the program\n\n\
 			throw;
 			break;
 		}
-		if (vec.size() > 0)
-			Delete(vec);
 		break;
 	}
+	if (vec.size() > 0)
+		Delete(vec);
 }
 
 void Edit(vector<WaterBody*>& vec)
@@ -283,56 +342,39 @@ void Print(std::vector<WaterBody*>& vec)
 {
 	system("CLS");
 
-	cout << "\
-Main Menu_indev\n\
-A. Add\n";
-
-	if (!vec.empty())
-		cout << "\
-D. Delete\n\
-E. Edit\n\
-Q. Print\n\
-S. Sort\n\
-Enter. Upload To Site\n\
-Ctrl + S. Save to file\n\
-\n\
-";
-
-	cout << "\
-Ctrl + L. Load from file\n\
-Esc. Stop the program\n\n\
-";
+	printMenuOptions(vec);
 
 	cout << "\
 \nA. Print all\
-\n(num). Print by index\
-\nEsc. Go Back\n\n";
-	int choice = _lgetch();
-	switch (choice)
+\n(num { 0 -> " << vec.size() - 1 << "}). Print by index\
+\nE. Go Back\n\n";
+	std::string input;
+	cin >> input;
+	int choice = std::stoi(input);
+	switch (input[0])
 	{
 	case 'A': //All
 	case 'a':
-		for (size_t i = 0; i < vec.size(); i++)
+		for (int i = 0; i < vec.size(); i++)
 		{
 			vec[i]->print(i);
 			cout << '\n';
 		}
 		break;
-	case 27:
-		break;
+	case 'E':
+	case 'e':
+		return;
 	default:
-		if (choice < 48)
-			throw;
-		if (choice - 48 >= vec.size())
-			throw;
-		vec[choice - 48]->print(choice - 48);
-		if (_lgetch() == 27)
-			return;
-		if (vec.size() > 0)
-			Print(vec);
+		if (choice < 0)
+			throw "Under 0";
+		if (choice >= vec.size())
+			throw "Over vector range";
+		vec[choice]->print(choice);
 		break;
 	}
 	_lgetch();
+	if (vec.size() > 0)
+		Print(vec);
 }
 
 void Sort(std::vector<WaterBody*>& vec)
@@ -341,9 +383,13 @@ void Sort(std::vector<WaterBody*>& vec)
 
 void Upload(std::vector<WaterBody*>& vec, HTML& page)
 {
+	page.eraseElements();
+	page.addElement(Paragraph("", "", "Results from the console application database").toString("h1"));
+	page.addElement(WebsiteElement("hr", "", "").toString());
+	page.addElement(Paragraph("", "", to_string(vec.size()) + " Entries in the database").toString("h4"));
+	page.addElement(WebsiteElement("br", "", "").toString());
 	page.addElement(Paragraph("", "", createTable(vec)).toString("center", true));
-	bool tempb = page.makeFile(60000);
-	if (tempb)
+	if (page.makeFile(60000))
 		cout << "Successfully uploaded (" << vec.size() << ") Water Bodies to webpage";
 	else
 		cout << "Upload was unsuccessful";
@@ -352,8 +398,7 @@ void Upload(std::vector<WaterBody*>& vec, HTML& page)
 
 void Save(std::vector<WaterBody*>& vec)
 {
-	bool tempb = saveWaterBodiesToFile(vec, "", "../data.txt");
-	if (tempb)
+	if (saveWaterBodiesToFile(vec, "", "../data.txt"))
 		cout << "Successfully saved (" << vec.size() << ") Water Bodies";
 	else
 		cout << "Save was unsuccessful";
@@ -363,8 +408,7 @@ void Save(std::vector<WaterBody*>& vec)
 void Load(std::vector<WaterBody*>& vec)
 {
 	vec.clear();
-	bool tempb = loadWaterBodiesFromFile(vec, "", "../data.txt");
-	if (tempb)
+	if (loadWaterBodiesFromFile(vec, "", "../data.txt"))
 		cout << "Successfully loaded (" << vec.size() << ") Water Bodies";
 	else
 		cout << "Load was unsuccessful";
