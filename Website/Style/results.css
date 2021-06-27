@@ -6,6 +6,12 @@ body
 
 h1, h2 { text-align: center; }
 
+hr
+{
+	width: 80%;
+	border: 5px dashed #6930c3;
+}
+
 table { font-family: 'Comfortaa'; }
 
 .table

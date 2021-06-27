@@ -90,6 +90,12 @@ body\n\
 \n\
 h1, h2 { text-align: center; }\n\
 \n\
+hr\n\
+{\n\
+	width: 80%;\n\
+	border: 5px dashed #6930c3;\n\
+}\n\
+\n\
 table { font-family: 'Comfortaa'; }\n\
 \n\
 .table\n\
