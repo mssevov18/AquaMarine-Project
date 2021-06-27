@@ -5,7 +5,7 @@ using namespace std;
 string createTable(vector<WaterBody*>& vec, const string& __class, const string& __style)
 {
 	Paragraph out(__class, __style,
-		Paragraph("table", "", '\t' + 
+		Paragraph("", "", 
 			Paragraph("", "", "Id").toString("th") + '\n' +
 			Paragraph("", "", "Name").toString("th") + '\n' +
 			Paragraph("", "", "Longitude (&deg)").toString("th") + '\n' +
@@ -22,7 +22,7 @@ string createTable(vector<WaterBody*>& vec, const string& __class, const string&
 			Paragraph("", "", "Ph Level").toString("th") + '\n' +
 			Paragraph("", "", "PolutionLevel (%)").toString("th") + '\n' +
 			Paragraph("", "", "Contributor's Name").toString("th") + '\n'
-		).toString("tr", true) + '\n');
+		).toString("tr", true));
 	for (size_t i = 0; i < vec.size(); i++)
 		out.addContent('\t' + vec[i]->toHtmlTableRow(i) + '\n');
 	return out.toString("table", true);

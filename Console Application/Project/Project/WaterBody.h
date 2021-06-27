@@ -27,24 +27,24 @@ struct Coordinates
 	void operator()(float newLon, float newLat, float newAlt);
 };
 
-#define s_name      0
-#define c_pos       1
-#define f_lon       2
-#define f_lat       3
-#define f_alt       4
-#define f_len       5
-#define f_wid       6
-#define f_dep       7
-#define f_per       8
-#define f_area      9
-#define f_vol       10
-#define f_temp      11
-#define b_isfresh   12
-#define f_ph        13
-#define f_pollution 14
-#define s_cname     15
+constexpr int s_name      =  0;
+constexpr int c_pos       =  1;
+constexpr int f_lon       =  2;
+constexpr int f_lat       =  3;
+constexpr int f_alt       =  4;
+constexpr int f_len       =  5;
+constexpr int f_wid       =  6;
+constexpr int f_dep       =  7;
+constexpr int f_per       =  8;
+constexpr int f_area      =  9;
+constexpr int f_vol       = 10;
+constexpr int f_temp      = 11;
+constexpr int b_isfresh   = 12;
+constexpr int f_ph        = 13;
+constexpr int f_pollution = 14;
+constexpr int s_cname     = 15;
 
-#define delimeterC '|'
+constexpr char delimeterC = '|';
 
 class WaterBody
 {

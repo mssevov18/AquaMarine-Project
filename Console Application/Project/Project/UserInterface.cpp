@@ -52,6 +52,8 @@ void menu()
 
 void printMenuOptions(vector<WaterBody*> vec)
 {
+	system("CLS");
+
 	cout << "\
 Main Menu_indev\n\
 A. Add\n\
@@ -92,7 +94,7 @@ table { font-family: 'Comfortaa'; }\n\
 {\n\
 	max-width: 100%;\n\
 	margin: 20px;\n\
-	padding-top: 700px;\n\
+	padding-top: 10px;\n\
 }\n\
 \n\
 .content-table\n\
@@ -214,8 +216,6 @@ td:hover\n\
 			throw;
 			break;
 		}
-
-		system("CLS");
 	}
 }
 
@@ -289,8 +289,6 @@ void Add(vector<WaterBody*>& vec)
 
 void Delete(vector<WaterBody*>& vec)
 {
-	system("CLS");
-
 	printMenuOptions(vec);
 
 	cout << "\
@@ -299,7 +297,6 @@ void Delete(vector<WaterBody*>& vec)
 \nE. Go Back\n\n";
 	std::string input;
 	cin >> input;
-	int choice = std::stoi(input);
 	switch (input[0])
 	{
 	case 'A': //All
@@ -311,6 +308,7 @@ void Delete(vector<WaterBody*>& vec)
 	case 'e':
 		return;
 	default:
+		int choice = std::stoi(input);
 		if (choice < 0)
 			throw "Under 0";
 		if (choice >= vec.size())
@@ -339,6 +337,43 @@ void Edit(vector<WaterBody*>& vec)
 }
 
 void Print(std::vector<WaterBody*>& vec)
+{
+	printMenuOptions(vec);
+
+	cout << "\
+\nA. Print all\
+\n(num { 0 -> " << vec.size() - 1 << "}). Print by index\
+\nE. Go Back\n\n";
+	std::string input;
+	cin >> input;
+	switch (input[0])
+	{
+	case 'A': //All
+	case 'a':
+		for (int i = 0; i < vec.size(); i++)
+		{
+			vec[i]->print(i);
+			cout << '\n';
+		}
+		break;
+	case 'E':
+	case 'e':
+		return;
+	default:
+		int choice = std::stoi(input);
+		if (choice < 0)
+			throw "Under 0";
+		if (choice >= vec.size())
+			throw "Over vector range";
+		vec[choice]->print(choice);
+		break;
+	}
+	_lgetch();
+	if (vec.size() > 0)
+		Print(vec);
+}
+
+void Sort(std::vector<WaterBody*>& vec)
 {
 	system("CLS");
 
@@ -377,18 +412,17 @@ void Print(std::vector<WaterBody*>& vec)
 		Print(vec);
 }
 
-void Sort(std::vector<WaterBody*>& vec)
-{
-}
-
 void Upload(std::vector<WaterBody*>& vec, HTML& page)
 {
 	page.eraseElements();
 	page.addElement(Paragraph("", "", "Results from the console application database").toString("h1"));
-	page.addElement(WebsiteElement("hr", "", "").toString());
+	page.addElement(WebsiteElement("", "", "").toString("hr"));
 	page.addElement(Paragraph("", "", to_string(vec.size()) + " Entries in the database").toString("h4"));
-	page.addElement(WebsiteElement("br", "", "").toString());
-	page.addElement(Paragraph("", "", createTable(vec)).toString("center", true));
+	page.addElement(WebsiteElement("", "", "").toString("br"));
+	//page.addElement(Paragraph("", "", createTable(vec)).toString("center", true));
+	page.addLine();
+	page.addElement(createTable(vec,"table",""));
+	page.addLine();
 	if (page.makeFile(60000))
 		cout << "Successfully uploaded (" << vec.size() << ") Water Bodies to webpage";
 	else
