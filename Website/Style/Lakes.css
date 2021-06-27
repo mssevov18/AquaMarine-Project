@@ -81,3 +81,29 @@ nav ul li a:hover {
     margin-top: 300px;
     margin-bottom: 400px;
 }
+
+.button{
+    display: inline-block;
+    padding: 20px 40px;
+    color: #7400B8;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    text-decoration: none;
+    font-size: 40px;
+    overflow: hidden;
+    transition: 0.2s;
+    font-family: 'Comfortaa';
+}
+.button:hover{
+    color: #7400B8;
+    background: #80FFDB;
+    box-shadow: 0 0 5px #80FFDB, 0 0 20px #80FFDB, 0 0 40px #80FFDB ;
+}
+
+.button{
+    margin-bottom: 300px;
+}
+
+.position-button{
+    text-align: center;
+}
