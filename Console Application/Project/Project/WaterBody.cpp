@@ -29,11 +29,11 @@ std::string Coordinates::toHtmlTableRow()
 	).toString("tr");
 }
 
-std::string Coordinates::toHtmlTableData()
+std::string Coordinates::toHtmlTableData(const std::string& _class, const std::string& _style)
 {
-	return (Paragraph("", "", std::to_string(longitude)).toString("td") + '\n' +
-			Paragraph("", "", std::to_string(latitude)).toString("td") + '\n' +
-			Paragraph("", "", std::to_string(altitude)).toString("td") + '\n');
+	return (Paragraph(_class, _style, std::to_string(longitude)).toString("td") + '\n' +
+			Paragraph(_class, _style, std::to_string(latitude)).toString("td") + '\n' +
+			Paragraph(_class, _style, std::to_string(altitude)).toString("td") + '\n');
 }
 
 void Coordinates::operator()(float newLon, float newLat, float newAlt)
@@ -150,21 +150,24 @@ WaterBody WaterBody::getFromString(const std::string& in)
 
 std::string WaterBody::toHtmlTableRow(const int& id)
 {
+	std::string _class = "";
+	if (id % 2)
+		_class = "banded-data";
 	return Paragraph("content-table", "",
 		(id != -10 ? Paragraph("column", "", std::to_string(id)).toString("td") + '\n' : "") +
-		Paragraph("", "", name).toString("td") + '\n' +
-		position.toHtmlTableData() +
-		Paragraph("", "", std::to_string(maxLength)).toString("td") + '\n' +
-		Paragraph("", "", std::to_string(maxWidth)).toString("td") + '\n' +
-		Paragraph("", "", std::to_string(maxDepth)).toString("td") + '\n' +
-		Paragraph("", "", std::to_string(perimeter)).toString("td") + '\n' +
-		Paragraph("", "", std::to_string(area)).toString("td") + '\n' +
-		Paragraph("", "", std::to_string(volume)).toString("td") + '\n' +
-		Paragraph("", "", std::to_string(temperature)).toString("td") + '\n' +
-		Paragraph("", "", (isFreshWater ? "Fresh Water" : "Salt Water")).toString("td") + '\n' +
-		Paragraph("", "", std::to_string(phLevel)).toString("td") + '\n' +
-		Paragraph("", "", std::to_string(pollutionLevel)).toString("td") + '\n' +
-		Paragraph("", "", contributorName).toString("td") + '\n'
+		Paragraph(_class, "", name).toString("td") + '\n' +
+		position.toHtmlTableData(_class) +
+		Paragraph(_class, "", std::to_string(maxLength)).toString("td") + '\n' +
+		Paragraph(_class, "", std::to_string(maxWidth)).toString("td") + '\n' +
+		Paragraph(_class, "", std::to_string(maxDepth)).toString("td") + '\n' +
+		Paragraph(_class, "", std::to_string(perimeter)).toString("td") + '\n' +
+		Paragraph(_class, "", std::to_string(area)).toString("td") + '\n' +
+		Paragraph(_class, "", std::to_string(volume)).toString("td") + '\n' +
+		Paragraph(_class, "", std::to_string(temperature)).toString("td") + '\n' +
+		Paragraph(_class, "", (isFreshWater ? "Fresh Water" : "Salt Water")).toString("td") + '\n' +
+		Paragraph(_class, "", std::to_string(phLevel)).toString("td") + '\n' +
+		Paragraph(_class, "", std::to_string(pollutionLevel)).toString("td") + '\n' +
+		Paragraph(_class, "", contributorName).toString("td") + '\n'
 	).toString("tr");
 }
 
@@ -196,7 +199,8 @@ void WaterBody::print(const int& id)
 	position.print();
 	cout << "\n\tMax Length: " << maxLength << "m | Max Width: " << maxWidth << "m | Max Depth: " << maxDepth;
 	cout << "\n\tPerimeter: " << perimeter << "m | Area: " << area << "m^2 | Volume: " << volume << "m^3";
-	cout << "\n\tTemperature: " << temperature << "\370C | " << (isFreshWater ? "Fresh Water Body" : "Salt Water Body") << " | ph: " << phLevel << " | Polution Level:" << pollutionLevel << '\n';
+	cout << "\n\tTemperature: " << temperature << "\370C | " << (isFreshWater ? "Fresh Water Body" : "Salt Water Body") << " | ph: " << phLevel << " | Polution Level:" << pollutionLevel;
+	cout << "\n\tContributed by: " << contributorName << '\n';
 }
 
 void WaterBody::operator() (std::string name, Coordinates position, float maxLength, float maxWidth, float maxDepth, float temperature, bool isFreshWater, float phLevel, float pollutionLevel, std::string contributorName)

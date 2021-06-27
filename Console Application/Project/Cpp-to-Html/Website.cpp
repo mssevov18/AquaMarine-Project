@@ -117,9 +117,9 @@ bool HTML::makeFile(int refreshRate)
 \n\
 				<ul class=\"menu\">\n\
 					<li ><a href=\"../../index.html\">Home</a></li>\n\
-					<li><a href=\"../About us/About.html\">About us</a></li>\n\
+					<li><a href=\"../Lakes/Lakes.html\">Lakes</a></li>\n\
 					<li class=\"active\"><a href=\"#\">Results</a></li>\n\
-					<li><a href=\"#\">Contact</a></li>\n\
+					<li><a href=\"../About us/About.html\">About us</a></li>\n\
 				</ul>\n\
 \n\
 			</div>\n\

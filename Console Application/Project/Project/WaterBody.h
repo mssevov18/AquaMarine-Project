@@ -22,7 +22,7 @@ struct Coordinates
 	void print();
 
 	std::string toHtmlTableRow();
-	std::string toHtmlTableData();
+	std::string toHtmlTableData(const std::string& _class = "", const std::string& _style = "");
 
 	void operator()(float newLon, float newLat, float newAlt);
 };

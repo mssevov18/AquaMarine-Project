@@ -55,7 +55,7 @@ void printMenuOptions(vector<WaterBody*> vec)
 	system("CLS");
 
 	cout << "\
-Main Menu_indev\n\
+Main Menu\n\
 A. Add\n\
 W. Open Website\n\
 ";
@@ -87,6 +87,8 @@ body\n\
 	background-color: white;\n\
 	color: black;\n\
 }\n\
+\n\
+h1, h2 { text-align: center; }\n\
 \n\
 table { font-family: 'Comfortaa'; }\n\
 \n\
@@ -121,6 +123,10 @@ thead, th\n\
 th, td { padding: 12px 15px; }\n\
 \n\
 .content-table, tbody, tr { border-bottom: 1px solid #d3d3d3; }\n\
+\n\
+.banded-data { background-color: #D9CFF6 }\n\
+\n\
+td { background-color: #EDF0FC }\n\
 \n\
 tr { height: 60px; }\n\
 \n\
@@ -418,7 +424,7 @@ void Upload(std::vector<WaterBody*>& vec, HTML& page)
 	page.eraseElements();
 	page.addElement(Paragraph("", "", "Results from the console application database").toString("h1"));
 	page.addElement(WebsiteElement("", "", "").toString("hr"));
-	page.addElement(Paragraph("", "", to_string(vec.size()) + " Entries in the database").toString("h4"));
+	page.addElement(Paragraph("", "", to_string(vec.size()) + " Entries in the database").toString("h2"));
 	page.addElement(WebsiteElement("", "", "").toString("br"));
 	//page.addElement(Paragraph("", "", createTable(vec)).toString("center", true));
 	page.addLine();
