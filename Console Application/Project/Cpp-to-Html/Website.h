@@ -33,7 +33,7 @@ public:
 
 	std::string getFilePath();
 
-	void makeFile(int refreshRate = 1000);
+	bool makeFile(int refreshRate = 1000);
 };
 
 class CSS
@@ -55,5 +55,5 @@ public:
 	std::string getPath();
 	std::string getNamePath();
 
-	void makeFile();
+	bool makeFile();
 };

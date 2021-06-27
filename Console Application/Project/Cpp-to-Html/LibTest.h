@@ -10,6 +10,7 @@ using namespace std;
 #include "Website.h"
 #include "WebsiteElement.h"
 #include "InheritedWebsiteEliments.h"
+#include "Logframework.h"
 
 #define _path "C:/Users/mssevov18/Documents/Website"
 
@@ -33,10 +34,10 @@ void cppToHtmlTest()
 	pages[0].addElement(Paragraph("", "", "Hello World").toString());
 	pages[0].addElement(Link("", "", "GOOGLE","https://www.google.com/").toString());
 	pages[0].addElement(Paragraph::UnorderedList("", "",
-		Paragraph::ListItem("", "", "500", "100").toString() + "\n" +
-		Paragraph::ListItem("", "", "50", "").toString() + "\n" +
-		Paragraph::ListItem("", "", "522", "").toString() + "\n" +
-		Paragraph::ListItem("", "", "00", "2").toString() + "\n"
+		Paragraph::ListItem("", "", "500", "100").toString() + '\n' +
+		Paragraph::ListItem("", "", "50", "").toString() + '\n' +
+		Paragraph::ListItem("", "", "522", "").toString() + '\n' +
+		Paragraph::ListItem("", "", "00", "2").toString() + '\n'
 	).toString());
 	pages[0].addElement(Paragraph("", "", "fucl").toString("a"));
 
@@ -52,7 +53,7 @@ void cppToHtmlTest()
 	string temp = "";
 	while (a != 27)
 	{
-		a = _getch();
+		a = _lgetch();
 		switch (a)
 		{
 		case 8:

@@ -1,12 +1,15 @@
 #include "LogClass.h"
 
+#include "conio.h"
 
-std::string AddLeadingZeroes(int num)
+using namespace std;
+
+string AddLeadingZeroes(int num)
 {
-	std::string temp = "";
+	string temp = "";
 	if (num < 10 and num >= 0)
 		temp += L'0';
-	temp += std::to_string(num);
+	temp += to_string(num);
 	return temp;
 }
 
@@ -19,134 +22,110 @@ tm getTimeStamp()
 	return timeStamp;
 }
 
-std::string TmToDateString(tm tm, char delimiter)
+string TmToDateString(tm tm, char delimiter)
 {
-	std::string out = "";
-	out += AddLeadingZeroes(tm.tm_year + 1900) + delimiter;
-	out += AddLeadingZeroes(tm.tm_mon + 1) + delimiter;
-	out += AddLeadingZeroes(tm.tm_mday);
-	return out;
+	return string(
+			AddLeadingZeroes(tm.tm_year + 1900) + delimiter +
+			AddLeadingZeroes(tm.tm_mon + 1) + delimiter +
+			AddLeadingZeroes(tm.tm_mday)
+		);
 }
 
-std::string TmToTimeString(tm tm, char delimiter)
+string TmToTimeString(tm tm, char delimiter)
 {
-	std::string out = "";
-	out += AddLeadingZeroes(tm.tm_hour) + delimiter;
-	out += AddLeadingZeroes(tm.tm_min) + delimiter;
-	out += AddLeadingZeroes(tm.tm_sec);
-	return out;
+	return string(
+			AddLeadingZeroes(tm.tm_hour) + delimiter +
+			AddLeadingZeroes(tm.tm_min) + delimiter + 
+			AddLeadingZeroes(tm.tm_sec)
+		);
 }
 
-std::string SeverityToString(SEVERITY severity)
+string SeverityToString(int severity)
 {
 	switch (severity)
 	{
 	case $critical:
-		return "!#CRITICAL#!";
+		return "<CRITICAL> - ";
 	case $error:
-		return "!?ERROR?!";
+		return "|ERROR|    - ";
 	case $warning:
-		return "?WARNING?";
+		return "{WARNING}  - ";
 	case $debug:
-		return "$DEBUG$";
+		return "[DEBUG]    - ";
 	case $info:
-		return "-INFO-";
+		return "(INFO)     - ";
 	case $text:
 		return "";
 	default:
-		return "?? UNKNOWN ??";
+		return "~UNKNOWN~  - ";
 	}
 }
 
-void LOG::Log(SEVERITY severity, const std::string& message)
+void addlog(const int& severity, const string& message)
 {
-	this->severity = severity;
-	this->message = message;
-	this->timeStamp = getTimeStamp();
-}
-
-void LOG::operator()(SEVERITY severity, std::string message)
-{
-	this->severity = severity;
-	this->message = message;
-	this->timeStamp = getTimeStamp();
-	logFstream << LogToString() << '\n';
-}
-
-std::string LOG::LogToString(char delimiter)
-{
-	if (severity == $text)
-		return (message);
-	return (
-		TmToDateString(timeStamp) + delimiter +
-		TmToTimeString(timeStamp) + delimiter +
-		SeverityToString(severity) + delimiter +
-		message
-		);
-}
-
-LOG::LOG(bool ornamental)
-{
-	this->severity = $info;
-	this->message = "";
-	this->ornamental = ornamental;
-}
-
-LOG::LOG(const std::string& path, bool ornamental)
-{
-	this->ornamental = ornamental;
-	this->Open("C:/Users/mssevov18/Documents/Logs/logs.log");
-}
-
-void LOG::CreateSaveDir()
-{
-	system("mkdir C:/Logs");
-	system("mkdir C:/Logs/Log-class");
-	system("cls");
-}
-
-void LOG::PrintLog()
-{
-	std::cout << LogToString() << "\n";
-}
-
-void LOG::Close()
-{
-	this->timeStamp = getTimeStamp();
-	logFstream << "\n" << TmToDateString(timeStamp) << " " << TmToTimeString(timeStamp) << "\n";
-	if (ornamental)
-		logFstream << "====  ====  ====| End  of  Log |====  ====  ====\n\n";
-	else
-		logFstream << "End of Log\n\n";
-	logFstream.close();
-}
-
-bool LOG::Open(const std::string& path)
-{
-	logFstream.open(path, std::ios::out | std::ios::app);
-	if (logFstream.is_open())
+	fstream file;
+	file.open(_logpath, ios::out | ios::app);
+	if (!file.is_open())
+		return;
+	tm timeStamp = getTimeStamp();
+	switch (severity)
 	{
-		this->timeStamp = getTimeStamp();
-		if (ornamental)
-			logFstream << "====  ====  ====| Start of Log |====  ====  ====\n";
-		else
-			logFstream << "Start of Log\n";
-		logFstream << TmToDateString(timeStamp) << " " << TmToTimeString(timeStamp) << "\n\n";
-		return true;
+	case $text:
+		file << message << '\n';
+		break;
+	case $start:
+		file << string(
+			"Program has started at: " + 
+			TmToDateString(timeStamp) + ' ' +
+			TmToTimeString(timeStamp) + '\n'
+		);
+		break;
+	case $end:
+		file << string(
+			"Program has ended   at: " + 
+			TmToDateString(timeStamp) + ' ' +
+			TmToTimeString(timeStamp) + '\n'
+		);
+		break;
+	default:
+		file << string(
+			TmToDateString(timeStamp) + ' ' +
+			TmToTimeString(timeStamp) + ' ' +
+			SeverityToString(severity) + ' ' +
+			message + '\n'
+		);
+		break;
 	}
-	return false;
+	file.close();
 }
 
-bool LOG::Is_Open()
+void addline(const int& amount)
 {
-	return logFstream.is_open();
+	fstream file;
+	file.open(_logpath, ios::out | ios::app);
+	if (!file.is_open())
+		return;
+	for (int i = 0; i < amount; i++)
+		file << '\n';
+	file.close();
 }
 
-void LOG::Clear(const std::string& path)
-{
-	if (logFstream.is_open())
-		logFstream.close();
-	logFstream.open(path, std::ios::out | std::ios::trunc);
-	logFstream.close();
+vector<char> keylogger;
 
+char _lgetch()
+{
+	keylogger.push_back(_getch());
+	return keylogger[keylogger.size() - 1];
+}
+
+void addKeyLog()
+{
+	fstream file;
+	file.open(_logpath, ios::out | ios::app);
+	if (!file.is_open())
+		return;
+	file << "Keys ASCII (" + to_string(keylogger.size()) + "): ";
+	for (size_t i = 0; i < keylogger.size(); i++)
+		file << to_string(int(keylogger[i])) + ' ';
+	file.close();
 }

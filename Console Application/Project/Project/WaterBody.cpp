@@ -23,17 +23,17 @@ void Coordinates::print()
 std::string Coordinates::toHtmlTableRow()
 {
 	return Paragraph("", "",
-		Paragraph("", "", std::to_string(longitude)).toString("td") + "\n" +
-		Paragraph("", "", std::to_string(latitude)).toString("td") + "\n" +
-		Paragraph("", "", std::to_string(altitude)).toString("td") + "\n"
+		Paragraph("", "", std::to_string(longitude)).toString("td") + '\n' +
+		Paragraph("", "", std::to_string(latitude)).toString("td") + '\n' +
+		Paragraph("", "", std::to_string(altitude)).toString("td") + '\n'
 	).toString("tr");
 }
 
 std::string Coordinates::toHtmlTableData()
 {
-	return (Paragraph("", "", std::to_string(longitude)).toString("td") + "\n" +
-			Paragraph("", "", std::to_string(latitude)).toString("td") + "\n" +
-			Paragraph("", "", std::to_string(altitude)).toString("td") + "\n");
+	return (Paragraph("", "", std::to_string(longitude)).toString("td") + '\n' +
+			Paragraph("", "", std::to_string(latitude)).toString("td") + '\n' +
+			Paragraph("", "", std::to_string(altitude)).toString("td") + '\n');
 }
 
 void Coordinates::operator()(float newLon, float newLat, float newAlt)
@@ -57,12 +57,12 @@ WaterBody::WaterBody()
 	temperature   = 0;
 	isFreshWater  = 0;
 	phLevel       = 0;
-	polutionLevel = 0;
+	pollutionLevel = 0;
 					
 	contributorName = "";
 }
 
-WaterBody::WaterBody(std::string name, Coordinates position, float maxLength, float maxWidth, float maxDepth, float temperature, bool isFreshWater, float phLevel, float polutionLevel, std::string contributorName)
+WaterBody::WaterBody(std::string name, Coordinates position, float maxLength, float maxWidth, float maxDepth, float temperature, bool isFreshWater, float phLevel, float pollutionLevel, std::string contributorName)
 {
 	this->name = name;
 
@@ -75,14 +75,12 @@ WaterBody::WaterBody(std::string name, Coordinates position, float maxLength, fl
 	this->maxDepth  = maxDepth;
 
 	// We are assuming that the shape is a square
-	this->perimeter = 2 * (maxWidth + maxLength);
-	this->area      = maxWidth * maxLength;
-	this->volume    = this->area * maxDepth;
+	this->calculate();
 
 	this->temperature   = temperature;
 	this->isFreshWater  = isFreshWater;
 	this->phLevel       = phLevel;
-	this->polutionLevel = polutionLevel;
+	this->pollutionLevel = pollutionLevel;
 
 	this->contributorName = contributorName;
 }
@@ -150,56 +148,63 @@ WaterBody WaterBody::getFromString(const std::string& in)
 	return out;
 }
 
-std::string WaterBody::toHtmlTableRow()
+WaterBody WaterBody::getFromStruct(StructWaterBody in)
+{
+	return WaterBody(in.name, in.position, in.maxLength, in.maxWidth, in.maxDepth, in.temperature, in.isFreshWater, in.phLevel, in.pollutionLevel, in.contributorName);;
+}
+
+std::string WaterBody::toHtmlTableRow(const int& id)
 {
 	return Paragraph("", "",
-		Paragraph("", "", name).toString("td") + "\n" +
+		(id != -10 ? Paragraph("", "", std::to_string(id)).toString("td") + '\n' : "") +
+		Paragraph("", "", name).toString("td") + '\n' +
 		position.toHtmlTableData() +
-		Paragraph("", "", std::to_string(maxLength)).toString("td") + "\n" +
-		Paragraph("", "", std::to_string(maxWidth)).toString("td") + "\n" +
-		Paragraph("", "", std::to_string(maxDepth)).toString("td") + "\n" +
-		Paragraph("", "", std::to_string(perimeter)).toString("td") + "\n" +
-		Paragraph("", "", std::to_string(area)).toString("td") + "\n" +
-		Paragraph("", "", std::to_string(volume)).toString("td") + "\n" +
-		Paragraph("", "", std::to_string(temperature)).toString("td") + "\n" +
-		Paragraph("", "", (isFreshWater ? "Fresh Water" : "Salt Water")).toString("td") + "\n" +
-		Paragraph("", "", std::to_string(phLevel)).toString("td") + "\n" +
-		Paragraph("", "", std::to_string(polutionLevel)).toString("td") + "\n" +
-		Paragraph("", "", contributorName).toString("td") + "\n"
+		Paragraph("", "", std::to_string(maxLength)).toString("td") + '\n' +
+		Paragraph("", "", std::to_string(maxWidth)).toString("td") + '\n' +
+		Paragraph("", "", std::to_string(maxDepth)).toString("td") + '\n' +
+		Paragraph("", "", std::to_string(perimeter)).toString("td") + '\n' +
+		Paragraph("", "", std::to_string(area)).toString("td") + '\n' +
+		Paragraph("", "", std::to_string(volume)).toString("td") + '\n' +
+		Paragraph("", "", std::to_string(temperature)).toString("td") + '\n' +
+		Paragraph("", "", (isFreshWater ? "Fresh Water" : "Salt Water")).toString("td") + '\n' +
+		Paragraph("", "", std::to_string(phLevel)).toString("td") + '\n' +
+		Paragraph("", "", std::to_string(pollutionLevel)).toString("td") + '\n' +
+		Paragraph("", "", contributorName).toString("td") + '\n'
 	).toString("tr");
 }
 
-std::string WaterBody::toString()
+std::string WaterBody::toString(bool ommit)
 {
 	return std::string(
-		name + delimeterS +
-		to_string(position.longitude) + delimeterS +
-		to_string(position.latitude) + delimeterS +
-		to_string(position.altitude) + delimeterS +
-		to_string(maxLength) + delimeterS +
-		to_string(maxWidth) + delimeterS +
-		to_string(maxDepth) + delimeterS +
-		//to_string(perimeter) + delimeterS +
-		//to_string(area) + delimeterS +
-		//to_string(volume) + delimeterS +
-		to_string(temperature) + delimeterS +
-		to_string(isFreshWater) + delimeterS +
-		to_string(phLevel) + delimeterS +
-		to_string(polutionLevel) + delimeterS +
+		name + delimeterC +
+		to_string(position.longitude) + delimeterC +
+		to_string(position.latitude) + delimeterC +
+		to_string(position.altitude) + delimeterC +
+		to_string(maxLength) + delimeterC +
+		to_string(maxWidth) + delimeterC +
+		to_string(maxDepth) + delimeterC +
+		(ommit ? "" :
+			to_string(perimeter) + delimeterC +
+			to_string(area) + delimeterC +
+			to_string(volume) + delimeterC) + 
+		to_string(temperature) + delimeterC +
+		to_string(isFreshWater) + delimeterC +
+		to_string(phLevel) + delimeterC +
+		to_string(pollutionLevel) + delimeterC +
 		contributorName
 	);
 }
 
-void WaterBody::print()
+void WaterBody::print(const int& id)
 {
-	cout << name << ": \n\t";
+	cout << (id != -10 ? "#" + std::to_string(id) + " - " : "") << name << ": \n\t";
 	position.print();
 	cout << "\n\tMax Length: " << maxLength << "m | Max Width: " << maxWidth << "m | Max Depth: " << maxDepth;
 	cout << "\n\tPerimeter: " << perimeter << "m | Area: " << area << "m^2 | Volume: " << volume << "m^3";
-	cout << "\n\tTemperature: " << temperature << "\370C | " << (isFreshWater ? "Fresh Water Body" : "Salt Water Body") << " | ph: " << phLevel << " | Polution Level:" << polutionLevel << '\n';
+	cout << "\n\tTemperature: " << temperature << "\370C | " << (isFreshWater ? "Fresh Water Body" : "Salt Water Body") << " | ph: " << phLevel << " | Polution Level:" << pollutionLevel << '\n';
 }
 
-void WaterBody::operator() (std::string name, Coordinates position, float maxLength, float maxWidth, float maxDepth, float temperature, bool isFreshWater, float phLevel, float polutionLevel, std::string contributorName)
+void WaterBody::operator() (std::string name, Coordinates position, float maxLength, float maxWidth, float maxDepth, float temperature, bool isFreshWater, float phLevel, float pollutionLevel, std::string contributorName)
 {
 	this->name = name;
 
@@ -219,7 +224,105 @@ void WaterBody::operator() (std::string name, Coordinates position, float maxLen
 	this->temperature   = temperature;
 	this->isFreshWater  = isFreshWater;
 	this->phLevel       = phLevel;
-	this->polutionLevel = polutionLevel;
+	this->pollutionLevel = pollutionLevel;
 
 	this->contributorName = contributorName;
+}
+
+void checkIfUnsigned(const float& in)
+{
+	if (in < 0)
+		throw in;
+}
+
+void WaterBody::fChange(wbData field, const float& newData)
+{
+	switch (field)
+	{
+	case f_lon:
+		checkIfUnsigned(newData);
+		position.longitude = newData;
+		break;
+	case f_lat:
+		checkIfUnsigned(newData);
+		position.latitude = newData;
+		break;
+	case f_alt:
+		checkIfUnsigned(newData);
+		position.altitude = newData;
+		break;
+	case f_len:
+		checkIfUnsigned(newData);
+		maxLength = newData;
+		calculate();
+		break;
+	case f_wid:
+		checkIfUnsigned(newData);
+		maxWidth = newData;
+		calculate();
+		break;
+	case f_dep:
+		checkIfUnsigned(newData);
+		maxDepth = newData;
+		calculate();
+		break;
+	case f_temp:
+		temperature = newData;
+		break;
+	case f_ph:
+		phLevel = newData;
+		break;
+	case f_pollution:
+		checkIfUnsigned(newData);
+		maxLength = newData;
+		break;
+	default:
+		throw field;
+	}
+}
+
+void WaterBody::cChange(wbData field, const Coordinates& newData)
+{
+	switch (field)
+	{
+	case c_pos:
+		position = newData;
+		break;
+	default:
+		throw field;
+	}
+}
+
+void WaterBody::bChange(wbData field, const bool& newData)
+{
+	switch (field)
+	{
+	case b_isfresh:
+		isFreshWater = newData;
+		break;
+	default:
+		throw field;
+	}
+}
+
+void WaterBody::sChange(wbData field, const std::string& newData)
+{
+	switch (field)
+	{
+	case s_name:
+		name = newData;
+		break;
+	case s_cname:
+		contributorName = newData;
+		break;
+	default:
+		throw field;
+	}
+}
+
+void WaterBody::calculate()
+{
+	this->perimeter = 2 * (maxWidth + maxLength);
+	this->area = maxWidth * maxLength;
+	this->volume = this->area * maxDepth;
 }

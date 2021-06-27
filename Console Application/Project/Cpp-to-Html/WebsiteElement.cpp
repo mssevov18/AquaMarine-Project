@@ -51,6 +51,6 @@ std::string WebsiteElement::toString(const std::string& customTag, bool newLine)
 		(_class.empty() ? "" : " class=\"" + _class + "\"") +
 		(_style.empty() ? "" : " style=\"" + _style + "\"") +
 		">" +
-		(newLine ? "\n" : " ") +
+		(newLine ? '\n' : ' ') +
 		"</" + (customTag.empty() ? _tag : customTag) + ">");
 }

@@ -8,8 +8,10 @@
 #include "Logframework.h"
 #include "FileHanlder.h"
 
+
 void waterBodyTest()
 {
+
 	string name = "mitko";
 	Coordinates coord(100.0f, 2.2f, 21569.0f);
 	coord.print();
@@ -31,35 +33,29 @@ void waterBodyTest()
 
 	srand(unsigned(time(NULL)));
 
-	vector<WaterBody> vec;
-	vec.push_back(WaterBody::getRandomWaterBody());
-	vec[0].print();
+	vector<WaterBody*> vec;
+	vec.push_back(new WaterBody(WaterBody::getRandomWaterBody()));
+	vec[0]->print();
 	cout << "\370";
-	vec.push_back(WaterBody::getRandomWaterBody());
-	vec.push_back(WaterBody::getRandomWaterBody());
-	vec.push_back(WaterBody::getRandomWaterBody());
-	vec.push_back(WaterBody::getRandomWaterBody());
-	vec.push_back(WaterBody::getRandomWaterBody());
-	vec.push_back(WaterBody::getRandomWaterBody());
-	vec.push_back(WaterBody::getRandomWaterBody());
-	vec.push_back(WaterBody::getRandomWaterBody());
-
+	for (size_t i = 0; i < 40; i++)
+		vec.push_back(new WaterBody(WaterBody::getRandomWaterBody()));
 	HTML page("../../../Website/Pages/Results", "results", "Results");
 	CSS sheet("../../../Website/Style", "results");
 
 	sheet.addContent(
-		"body\n\
-		{\n\
-			background-color: white;\n\
-			color: black;\n\
-			font-size: 16pt\n\
-		}\n\
-		\n\
-		table, th, td {\n\
-			border: 1px solid black;\n\
-			margin: 5px\n\
-		}\n\
-		"
+"body\n\
+{\n\
+	background-color: white;\n\
+	color: black;\n\
+}\n\
+\n\
+table, th, td\n\
+{\n\
+	border: 1px solid black;\n\
+	margin: 5px;\n\
+	font-size: 14pt;\n\
+}\n\
+"
 		);
 
 	page.addStyleSheet(sheet.getNamePath());
@@ -68,13 +64,19 @@ void waterBodyTest()
 	sheet.makeFile();
 	page.makeFile(60000);
 
-	vec[0].print();
+	vec[0]->print();
 	cout << "\n\n\n";
-	string a = vec[0].toString();
+	string a = vec[0]->toString();
 	WaterBody A = WaterBody::getFromString(a);
 	A.print();
 
-	saveWaterBodiesToFile(vec, "", "data.txt");
+	saveWaterBodiesToFile(vec, "", "../data.txt");
 	vec.clear();
-	loadWaterBodiesFromFile(vec, "", "data.txt");
+	loadWaterBodiesFromFile(vec, "", "../data.txt");
+
+	A.sChange(s_name, "mitko12");
+	A.fChange(f_dep, 1000);
+	A.bChange(b_isfresh, false);
+	A.cChange(c_pos, Coordinates(100, 1000, 20000));
+	A.print();
 }

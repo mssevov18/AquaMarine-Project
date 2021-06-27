@@ -4,6 +4,7 @@
 #include <fstream>
 #include <string>
 #include <ctime>
+#include <vector>
 
 std::string AddLeadingZeroes(int num);
 
@@ -13,52 +14,23 @@ std::string TmToDateString(tm tm, char delimiter = '-');
 
 std::string TmToTimeString(tm tm, char delimiter = ':');
 
-enum class SEVERITY
-{
-	CRITICAL = 0,
-	ERROR = 1,
-	WARNING = 2,
-	DEBUG = 3,
-	INFO = 4,
-	TEXT = 5
-};
+#define $critical 0
+#define $error    1
+#define $warning  2
+#define $debug    3
+#define $info     4
+#define $text     5
+#define $start    6
+#define $end      7
 
-#define $critical SEVERITY::CRITICAL
-#define $error    SEVERITY::ERROR
-#define $warning  SEVERITY::WARNING
-#define $debug    SEVERITY::DEBUG
-#define $info     SEVERITY::INFO
-#define $text     SEVERITY::TEXT
+std::string SeverityToString(int severity);
 
-std::string SeverityToString(SEVERITY severity);
+const std::string _logpath = "../log.log";
 
-//Date Time Severity Message
-class LOG
-{
-public:
-	LOG(bool ornamental = false);
-	LOG(const std::string& path, bool ornamental = false);
+void addlog(const int& severity, const std::string& message);
 
-	static void CreateSaveDir();
+void addline(const int& amount = 1);
 
-private:
-	tm            timeStamp; //Log's time stamp
-	enum SEVERITY severity;  //Log's severity
-	std::string   message;   //Log's message
+char _lgetch();
 
-	bool         ornamental;
-	std::fstream logFstream;
-
-public:
-	void PrintLog();
-	void Log(SEVERITY severity, const std::string& message);
-
-	std::string LogToString(char delimiter = ' ');
-
-	void operator()(SEVERITY severity, std::string message);
-
-	void Close();
-	bool Open(const std::string& path);
-	bool Is_Open();
-	void Clear(const std::string& path);
-};
+void addKeyLog();

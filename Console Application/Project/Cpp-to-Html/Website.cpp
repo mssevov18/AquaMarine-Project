@@ -29,7 +29,7 @@ HTML::~HTML()
 
 void HTML::addElement(const std::string& element)
 {
-	elements.push_back(element + "\n");
+	elements.push_back(element + '\n');
 }
 
 void HTML::removeElement()
@@ -62,14 +62,15 @@ std::string HTML::getFilePath()
 	return std::string(path + "/" + filename + ".html");
 }
 
-void HTML::makeFile(int refreshRate)
+bool HTML::makeFile(int refreshRate)
 {
 	fstream file;
 	file.open(path + "/" + filename + ".html", fstream::out, fstream::trunc);
 
-	if (file.is_open())
-	{
-		file << "\
+	if (!file.is_open())
+		return false;
+
+	file << "\
 <!DOCTYPE html>\n\
 <html lang=\"en\">\n\
 \n\
@@ -79,17 +80,17 @@ void HTML::makeFile(int refreshRate)
 	<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n\
 \n";
 
-		for (size_t i = 0; i < styleSheets.size(); i++)
-			file << "<link rel = \"stylesheet\" type = \"text/css\" href = \"" << styleSheets[i] + ".css" << "\">\n";
+	for (size_t i = 0; i < styleSheets.size(); i++)
+		file << "<link rel = \"stylesheet\" type = \"text/css\" href = \"" << styleSheets[i] + ".css" << "\">\n";
 
-		file << "\
+	file << "\
 	<link rel = \"stylesheet\" type = \"text/css\" href = \"../../Style/About.css\">\n\
 	<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\">\n\
 	<link href=\"https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600&display=swap\" rel=\"stylesheet\">\n\
 	<link rel=\"shortcut icon\"  type=\"image/x-icon\" href=\"../../Illustration/Favicon/Favicon.svg\">\n\
 \n";
 
-		file << "\
+	file << "\
 <script type = \"text/JavaScript\">\n\
 	function AutoRefresh(t) {\n\
 		setTimeout(\"location.reload(true);\", t);\n\
@@ -98,9 +99,9 @@ void HTML::makeFile(int refreshRate)
 </head>\n\
 \n";
 
-		file << "<body onload = \"JavaScript:AutoRefresh(" + to_string(refreshRate) +");\">\n";
+	file << "<body onload = \"JavaScript:AutoRefresh(" + to_string(refreshRate) + ");\">\n";
 
-		file << "\
+	file << "\
 	<div class=\"illustration1\">\n\
 		<!-- This is navigation bar-->\n\
 		<nav class=\"positio_nav\">\n\
@@ -122,17 +123,17 @@ void HTML::makeFile(int refreshRate)
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>\n\
 	<div>\n";
 
-		for (size_t i = 0; i < elements.size(); i++)
-			file << elements[i];
+	for (size_t i = 0; i < elements.size(); i++)
+		file << elements[i];
 
-		file << "\
+	file << "\
 \n\
 </div>\n\
 </body>\n\
 </html>\n\
 ";
-		file.close();
-	}
+	file.close();
+	return true;
 }
 
 CSS::CSS()
@@ -149,7 +150,7 @@ CSS::CSS(const std::string& path, const std::string& filename)
 
 void CSS::addContent(const std::string& newContent)
 {
-	content += newContent + "\n";
+	content += newContent + '\n';
 }
 
 void CSS::replaceContent(const std::string& newContent)
@@ -172,14 +173,16 @@ std::string CSS::getNamePath()
 	return std::string(path + "/" + filename);
 }
 
-void CSS::makeFile()
+bool CSS::makeFile()
 {
 	fstream file;
 	file.open(path + "/" + filename + ".css", fstream::out, fstream::trunc);
 
-	if (file.is_open())
-	{
-		file << content;
-		file.close();
-	}
+	if (!file.is_open())
+		return false;
+
+	file << content;
+	file.close();
+
+	return true;
 }
