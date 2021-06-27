@@ -224,6 +224,21 @@ void WaterBody::operator() (std::string name, Coordinates position, float maxLen
 	this->contributorName = contributorName;
 }
 
+bool WaterBody::isEqual(const WaterBody& rhs, int mode)
+{
+	return false;
+}
+
+bool WaterBody::isGreater(const WaterBody& rhs, int mode)
+{
+	return false;
+}
+
+bool WaterBody::isLesser(const WaterBody& rhs, int mode)
+{
+	return false;
+}
+
 void checkIfUnsigned(const float& in)
 {
 	if (in < 0)

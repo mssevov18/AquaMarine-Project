@@ -124,7 +124,7 @@ tr { height: 60px; }\n\
 \n\
 td:hover\n\
 {\n\
-	background: aquamarine;\n\
+	background: #B5F4E5;\n\
 	font-weight: bold;\n\
 	color: black;\n\
 }\n\
@@ -190,8 +190,7 @@ td:hover\n\
 		case 'S': // Sort
 		case 's':
 			if (!vec.empty())
-			{
-			}
+				Sort(vec);
 			break;
 		case 'W': // Website
 		case 'w':
@@ -295,22 +294,27 @@ void Delete(vector<WaterBody*>& vec)
 	printMenuOptions(vec);
 
 	cout << "\
-\n-1. Delete all\
+\nA. Delete all\
 \n(num { 0 -> " << vec.size() - 1 << "}). Delete by index\
-\n-2. Go Back\n\n";
-	int choice;
-	cin >> choice;
-	switch (choice)
+\nE. Go Back\n\n";
+	std::string input;
+	cin >> input;
+	int choice = std::stoi(input);
+	switch (input[0])
 	{
-	case -1: //All
+	case 'A': //All
+	case 'a':
 		vec.clear();
 		cout << "All Data has been Deleted\n";
 		break;
-	case -2:
+	case 'E':
+	case 'e':
 		return;
 	default:
+		if (choice < 0)
+			throw "Under 0";
 		if (choice >= vec.size())
-			throw "Out of vector range";
+			throw "Over vector range";
 		vec[choice]->print(choice);
 		cout << "\nEnter to delete, Escape to cancel\n";
 		switch (_lgetch())
@@ -324,10 +328,10 @@ void Delete(vector<WaterBody*>& vec)
 			throw;
 			break;
 		}
-		if (vec.size() > 0)
-			Delete(vec);
 		break;
 	}
+	if (vec.size() > 0)
+		Delete(vec);
 }
 
 void Edit(vector<WaterBody*>& vec)
@@ -341,34 +345,36 @@ void Print(std::vector<WaterBody*>& vec)
 	printMenuOptions(vec);
 
 	cout << "\
-\n-1. Print all\
+\nA. Print all\
 \n(num { 0 -> " << vec.size() - 1 << "}). Print by index\
-\n-2. Go Back\n\n";
-	int choice;
-	cin >> choice;
-	switch (choice)
+\nE. Go Back\n\n";
+	std::string input;
+	cin >> input;
+	int choice = std::stoi(input);
+	switch (input[0])
 	{
-	case -1: //All
-		for (size_t i = 0; i < vec.size(); i++)
+	case 'A': //All
+	case 'a':
+		for (int i = 0; i < vec.size(); i++)
 		{
 			vec[i]->print(i);
 			cout << '\n';
 		}
 		break;
-	case -2:
+	case 'E':
+	case 'e':
 		return;
 	default:
 		if (choice < 0)
-			throw;
+			throw "Under 0";
 		if (choice >= vec.size())
-			throw;
+			throw "Over vector range";
 		vec[choice]->print(choice);
-		if (vec.size() > 0)
-			Print(vec);
 		break;
 	}
-	if (_lgetch() == 27)
-		return;
+	_lgetch();
+	if (vec.size() > 0)
+		Print(vec);
 }
 
 void Sort(std::vector<WaterBody*>& vec)

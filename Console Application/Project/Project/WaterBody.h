@@ -105,6 +105,11 @@ public:
 		std::string contributorName
 		);
 
+	//TODO add these vvv for sort func
+	bool isEqual(const WaterBody& rhs, int mode);
+	bool isGreater(const WaterBody& rhs, int mode);
+	bool isLesser(const WaterBody& rhs, int mode);
+
 	void fChange(int field, const float& newData);
 	void cChange(int field, const Coordinates& newData);
 	void bChange(int field, const bool& newData);
