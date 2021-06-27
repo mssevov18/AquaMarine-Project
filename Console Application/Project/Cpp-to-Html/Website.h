@@ -24,6 +24,7 @@ private:
 
 public:
 	void addElement(const std::string& element);
+	void addLine(const int& amount = 1);
 	void removeElement(void);
 	void removeElement(const size_t& index);
 	void eraseElements();

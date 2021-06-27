@@ -32,6 +32,12 @@ void HTML::addElement(const std::string& element)
 	elements.push_back(element + '\n');
 }
 
+void HTML::addLine(const int& amount)
+{
+	for (int i = 0; i < amount; i++)
+		elements.push_back("\n");
+}
+
 void HTML::removeElement()
 {
 	elements.pop_back();
@@ -76,7 +82,6 @@ bool HTML::makeFile(int refreshRate)
 \n\
 <head>\n\
 	<meta charset=\"UTF-8\">\n\
-	<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n\
 	<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n\
 \n";
 
@@ -120,11 +125,14 @@ bool HTML::makeFile(int refreshRate)
 			</div>\n\
 		</nav>\n\
 	</div>\n\
+\n\
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>\n\
-	<div>\n";
+\n\
+	<div>\n\
+\n";
 
 	for (size_t i = 0; i < elements.size(); i++)
-		file << elements[i];
+		file << "\t\t" + elements[i];
 
 	file << "\
 \n\
