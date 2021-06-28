@@ -227,7 +227,6 @@ td:hover\n\
 			inLoop = false;
 			break;
 		default:
-			throw;
 			break;
 		}
 	}
@@ -316,6 +315,8 @@ void Delete(vector<WaterBody*>& vec)
 	{
 	case 'A': //All
 	case 'a':
+		for (size_t i = 0; i < vec.size(); i++)
+			delete vec[i];
 		vec.clear();
 		cout << "All Data has been Deleted\n";
 		break;
@@ -334,7 +335,9 @@ void Delete(vector<WaterBody*>& vec)
 		{
 		case 13: // Enter
 			cout << "Deleted\n";
+			delete vec[choice];
 			vec.erase(vec.begin() + choice);
+			break;
 		case 27: // Esc
 			return;
 		default:
