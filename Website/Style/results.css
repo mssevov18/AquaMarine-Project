@@ -16,7 +16,7 @@ table { font-family: 'Comfortaa'; }
 
 .table
 {
-	max-width: 100%;
+	width: 30%;
 	margin: 20px;
 	padding-top: 10px;
 }

@@ -155,8 +155,6 @@ td:hover\n\
 	sheet.makeFile();
 	page.addStyleSheet(sheet.getNamePath());
 
-
-
 	char choice;
 	bool inLoop = true;
 	vector<WaterBody*> vec;
