@@ -319,6 +319,7 @@ void Delete(vector<WaterBody*>& vec)
 			delete vec[i];
 		vec.clear();
 		cout << "All Data has been Deleted\n";
+		_lgetch();
 		break;
 	case 'E':
 	case 'e':
@@ -454,7 +455,7 @@ void CheckStingInput(std::string &test)
 	
 	//check if there is space or delimeterC and replace with underscore
 	for (int i = 0; i < test.length(); i++)
-		if (test[i] == ' ' or test[i] == '|')
+		if (test[i] == ' ' or test[i] == delimeterC)
 			test[i] = '_';
 
 }
